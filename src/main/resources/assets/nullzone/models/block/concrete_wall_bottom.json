@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+    "textures": {
+      "up": "nullzone:block/concrete_wall",
+      "down": "nullzone:block/concrete_wall",
+      "north": "nullzone:block/concrete_wall_bottom",
+      "south": "nullzone:block/concrete_wall_bottom",
+      "west": "nullzone:block/concrete_wall_bottom",
+      "east": "nullzone:block/concrete_wall_bottom"
+  }
+}
