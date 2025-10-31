@@ -40,7 +40,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 	public static NbtGroup createGroup() {
 		return NbtGroup.Builder
 			.create(ModLimGen.CONCRETE_HALLS_ID)
-			.with("concrete_halls_straight_1") // Replace with to from range
+			.with("concrete_halls", "concrete_halls_straight_1") // Replace with to from range
 			.build();
 	}
 
@@ -59,6 +59,10 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 
 	@Override
 	public CompletableFuture<Chunk> populateNoise(ChunkRegion chunkRegion, ChunkStatus targetStatus, Executor executor, ServerWorld world, ChunkGenerator generator, StructureTemplateManager structureTemplateManager, ServerLightingProvider lightingProvider, Function<Chunk, CompletableFuture<Either<Chunk, ChunkHolder.Unloaded>>> fullChunkConverter, List<Chunk> chunks, Chunk chunk) {
+	    BlockPos origin = new BlockPos(0, 64, 0);
+
+	    generateNbt(chunkRegion, origin, nbtGroup.nbtId("concrete_halls", "concrete_halls_straight_1"));
+
 		return CompletableFuture.completedFuture(chunk);
 	}
 
@@ -69,13 +73,9 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 
 	@Override
 	public int getWorldHeight() {
-		return 150;
+		return 144;
 	}
 
 	@Override
 	public void method_40450(List<String> list, RandomState randomState, BlockPos pos) {}
-
-	public static void init() {
-		Registry.register(Registries.CHUNK_GENERATOR, new Identifier(Nullzone.MOD_ID, "concretehallschunkgen"), ConcreteHallsChunkGen.CODEC);
-	}
 }

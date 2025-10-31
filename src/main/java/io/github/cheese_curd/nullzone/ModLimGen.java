@@ -37,7 +37,7 @@ public class ModLimGen implements LimlibRegistrar
 				1.0,
 				true,
 				false,
-				-32, 150, 150,
+				-32, 144, 144,
 				BlockTags.INFINIBURN_OVERWORLD,
 				DimensionTypes.OVERWORLD_ID,
 				5.0f,
@@ -56,7 +56,7 @@ public class ModLimGen implements LimlibRegistrar
 					new ConcreteHallsChunkGen(
 						new FixedBiomeSource(registry
 							.get(RegistryKeys.BIOME)
-							.getHolder(ConcreteHallsBiome.CONCRETE_HALLS_BIOME)
+							.getHolder(NullBiomes.CONCRETE_HALLS_BIOME)
 							.get())
 					)
 				)
@@ -78,7 +78,7 @@ public class ModLimGen implements LimlibRegistrar
 			HolderProvider<PlacedFeature> features = infoLookup.lookup(RegistryKeys.PLACED_FEATURE).get().getter();
 			HolderProvider<ConfiguredCarver<?>> carvers = infoLookup.lookup(RegistryKeys.CONFIGURED_CARVER).get().getter();
 
-			registry.register(ConcreteHallsBiome.CONCRETE_HALLS_BIOME, ConcreteHallsBiome.create(features, carvers), Lifecycle.stable());
+			registry.register(NullBiomes.CONCRETE_HALLS_BIOME, ConcreteHallsBiome.create(features, carvers), Lifecycle.stable());
 		}));
 	}
 }

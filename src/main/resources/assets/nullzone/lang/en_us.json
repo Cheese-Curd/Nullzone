@@ -1,4 +1,6 @@
 {
+  "itemGroup.nullzone.nullzone_group": "The Nullzone",
+
   "block.nullzone.ceiling_tile": "Ceiling Tile",
 
   "block.nullzone.wall_paper": "Wallpaper",
@@ -8,5 +10,7 @@
   "block.nullzone.concrete_wall_top": "Concrete Wall Top",
   "block.nullzone.concrete_wall_bottom": "Concrete Wall Bottom",
 
-  "block.nullzone.ceiling": "Ceiling"
+  "block.nullzone.ceiling": "Ceiling",
+
+  "block.nullzone.subflooring": "Subflooring"
 }

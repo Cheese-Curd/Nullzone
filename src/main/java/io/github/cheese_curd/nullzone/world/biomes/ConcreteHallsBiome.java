@@ -14,8 +14,6 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 
 public class ConcreteHallsBiome
 {
-	public static final RegistryKey<Biome> CONCRETE_HALLS_BIOME = RegistryKey.of(RegistryKeys.BIOME, new Identifier(Nullzone.MOD_ID, "concrete_halls"));
-
 	public static Biome create(HolderProvider<PlacedFeature> features, HolderProvider<ConfiguredCarver<?>> carvers) {
 		Biome.Builder biome = new Biome.Builder();
 
@@ -23,15 +21,22 @@ public class ConcreteHallsBiome
 
 		GenerationSettings.Builder generationSettings = new GenerationSettings.Builder(features, carvers);
 
-		BiomeEffects.Builder biomeEffects = new BiomeEffects.Builder();
-		// (your effects here)
+		BiomeEffects.Builder biomeEffects = new BiomeEffects.Builder()
+			.fogColor(0x999999)
+			.skyColor(0xAAAAAA)
+			.waterColor(0x444444)
+			.waterFogColor(0x222222);
+
 		BiomeEffects effects = biomeEffects.build();
 
-		biome.spawnSettings(spawnSettings.build());
-		biome.generationSettings(generationSettings.build());
-		biome.effects(effects);
-
-		// (biome weather related settings here)
+		biome.effects(effects)
+			.hasPrecipitation(false)
+			.temperature(0.8F)
+			.downfall(0.0F)
+			.spawnSettings(spawnSettings.build())
+			.generationSettings(generationSettings.build())
+			.effects(effects)
+			.build();
 
 		return biome.build();
 	}
