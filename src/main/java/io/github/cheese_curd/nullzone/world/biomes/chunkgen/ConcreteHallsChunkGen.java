@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.cheese_curd.nullzone.ModLimGen;
-import io.github.cheese_curd.nullzone.Nullzone;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.NbtGroup;
 import net.ludocrypt.limlib.api.world.chunk.AbstractNbtChunkGenerator;
@@ -12,13 +11,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerLightingProvider;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructureTemplateManager;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.ChunkRegion;
@@ -84,13 +80,19 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 	}
 
 	@Override
-	public CompletableFuture<Chunk> populateNoise(ChunkRegion chunkRegion, ChunkStatus targetStatus, Executor executor, ServerWorld world, ChunkGenerator generator, StructureTemplateManager structureTemplateManager, ServerLightingProvider lightingProvider, Function<Chunk, CompletableFuture<Either<Chunk, ChunkHolder.Unloaded>>> fullChunkConverter, List<Chunk> chunks, Chunk chunk) {
-		BlockPos chunkOrigin = chunk.getPos().getStartPos();
-
+	public CompletableFuture<Chunk> populateNoise(
+		ChunkRegion chunkRegion, ChunkStatus targetStatus, Executor executor,
+		ServerWorld world, ChunkGenerator generator, StructureTemplateManager structureTemplateManager,
+		ServerLightingProvider lightingProvider, Function<Chunk, CompletableFuture<Either<Chunk,
+			ChunkHolder.Unloaded>>> fullChunkConverter, List<Chunk> chunks, Chunk chunk)
+	{
 		fillBelowZeroWithStone(chunk, chunkRegion);
 
-		BlockPos origin = chunkOrigin.add(8, -1, 0);
-		generateNbt(chunkRegion, origin, nbtGroup.nbtId("concrete_halls", "concrete_halls_straight_2"));
+		BlockPos chunkOrigin = chunk.getPos().getStartPos();
+		BlockPos origin = chunkOrigin.add(0, -1, 0);
+
+		RandomGenerator random = RandomGenerator.createLegacy(chunkRegion.getSeed() + LimlibHelper.blockSeed(origin));
+		generateNbt(chunkRegion, origin, nbtGroup.pick("concrete_halls", random));
 
 		return CompletableFuture.completedFuture(chunk);
 	}
@@ -112,14 +114,9 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 	protected void modifyStructure(ChunkRegion region, BlockPos pos, BlockState state, Optional<NbtCompound> blockEntityNbt) {
 		super.modifyStructure(region, pos, state, blockEntityNbt);
 
-		if (state.isOf(Blocks.STRUCTURE_BLOCK)) {
-//			RandomGenerator random = RandomGenerator.createLegacy(region.getSeed() + LimlibHelper.blockSeed(pos));
-//
-//			if (random.nextDouble() < 0.5) {
-//				region.setBlockState(pos, Blocks.COBWEB.getDefaultState(), Block.NOTIFY_ALL, 1);
-//			} else {
+		if (state.isOf(Blocks.STRUCTURE_BLOCK))
+		{
 			region.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL, 1);
-//			}
 		}
 	}
 }
