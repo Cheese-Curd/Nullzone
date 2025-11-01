@@ -6,6 +6,7 @@
       "north": "nullzone:block/concrete_wall_bottom",
       "south": "nullzone:block/concrete_wall_bottom",
       "west": "nullzone:block/concrete_wall_bottom",
-      "east": "nullzone:block/concrete_wall_bottom"
-  }
+      "east": "nullzone:block/concrete_wall_bottom",
+      "particle": "nullzone:block/concrete_wall"
+    }
 }
