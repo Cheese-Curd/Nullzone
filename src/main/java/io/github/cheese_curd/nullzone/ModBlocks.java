@@ -1,6 +1,8 @@
 package io.github.cheese_curd.nullzone;
 
 import io.github.cheese_curd.nullzone.blocks.SubflooringBlock;
+import io.github.cheese_curd.nullzone.blocks.ToggleLight;
+import io.github.cheese_curd.nullzone.blocks.WetBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -40,13 +42,15 @@ public class ModBlocks
 
 	public static void register(ModContainer mod)
 	{
-		final Block CEILING_TILE =  registerBlock(mod, "ceiling_tile", QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), Nullzone.ITEM_NO_SETTINGS);
+		final Block CEILING_TILE = registerBlock(mod, "ceiling_tile", QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), Nullzone.ITEM_NO_SETTINGS);
 
-		final Block CONCRETE_WALL =  registerBlock(mod, "concrete_wall",        CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
-		final Block CONCRETE_WALL_TOP =  registerBlock(mod, "concrete_wall_top",    CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
-		final Block CONCRETE_WALL_BOTTOM =  registerBlock(mod, "concrete_wall_bottom", CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
 
-		final Block CEILING =  registerBlock(mod, "ceiling", CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
+		final Block CONCRETE_FLOOR       = registerBlock(mod, "concrete_floor",       CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
+		final Block CONCRETE_WALL        = registerBlock(mod, "concrete_wall",        CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
+		final Block CONCRETE_WALL_TOP    = registerBlock(mod, "concrete_wall_top",    CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
+		final Block CONCRETE_WALL_BOTTOM = registerBlock(mod, "concrete_wall_bottom", CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
+
+		final Block CEILING = registerBlock(mod, "ceiling", CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
 
 		// Sub Flooring
 		final SubflooringBlock SUBFLOORING = new SubflooringBlock(QuiltBlockSettings.copyOf(Blocks.OAK_PLANKS));
@@ -54,14 +58,37 @@ public class ModBlocks
 		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "subflooring"), SUBFLOORING);
 		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "subflooring"), new BlockItem(SUBFLOORING, Nullzone.ITEM_NO_SETTINGS));
 
+		// Ceiling Light
+		final ToggleLight CEILING_LIGHT = new ToggleLight(QuiltBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0);
+
+		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "ceiling_light"), CEILING_LIGHT);
+		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "ceiling_light"), new BlockItem(CEILING_LIGHT, Nullzone.ITEM_NO_SETTINGS));
+
+		// Wet Ceiling
+		final WetBlock WET_CEILING = new WetBlock(CONCRETE_SETTINGS, 25F);
+
+		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "wet_ceiling"), WET_CEILING);
+		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "wet_ceiling"), new BlockItem(WET_CEILING, Nullzone.ITEM_NO_SETTINGS));
+
+		// Wet Ceiling Tile
+		final WetBlock WET_CEILING_TILE = new WetBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F);
+
+		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "wet_ceiling_tile"), WET_CEILING_TILE);
+		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "wet_ceiling_tile"), new BlockItem(WET_CEILING_TILE, Nullzone.ITEM_NO_SETTINGS));
+
 		ItemGroupEvents.modifyEntriesEvent(Nullzone.NULLZONE_GROUP_KEY).register(entries -> {
 			entries.addItem(CEILING_TILE.asItem());
+			entries.addItem(WET_CEILING_TILE.asItem());
 
+			entries.addItem(CEILING_LIGHT.asItem());
+
+			entries.addItem(CONCRETE_FLOOR.asItem());
 			entries.addItem(CONCRETE_WALL.asItem());
 			entries.addItem(CONCRETE_WALL_TOP.asItem());
 			entries.addItem(CONCRETE_WALL_BOTTOM.asItem());
 
 			entries.addItem(CEILING.asItem());
+			entries.addItem(WET_CEILING.asItem());
 
 			entries.addItem(SUBFLOORING.asItem());
 		});

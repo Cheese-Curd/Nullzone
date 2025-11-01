@@ -22,10 +22,10 @@ public class ConcreteHallsBiome
 		GenerationSettings.Builder generationSettings = new GenerationSettings.Builder(features, carvers);
 
 		BiomeEffects.Builder biomeEffects = new BiomeEffects.Builder()
-			.fogColor(0x999999)
-			.skyColor(0xAAAAAA)
-			.waterColor(0x444444)
-			.waterFogColor(0x222222);
+			.fogColor(0x262626)
+			.skyColor(0x808080)
+			.waterColor(0x8E3900)
+			.waterFogColor(0x8C532C);
 
 		BiomeEffects effects = biomeEffects.build();
 
