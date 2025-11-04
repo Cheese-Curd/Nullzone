@@ -7,13 +7,12 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.StairsBlock;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import org.quiltmc.loader.api.ModContainer;
@@ -22,15 +21,17 @@ import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 public class ModBlocks
 {
-	public static Block registerBlock(ModContainer mod, String id, QuiltBlockSettings blockSettings, QuiltItemSettings itemSettings)
+	static Block makeBlock(QuiltBlockSettings blockSettings)
 	{
-		final Block _BLOCK = new Block(blockSettings);
-		final Item  _ITEM  = new BlockItem(_BLOCK, itemSettings);
+		return new Block(blockSettings);
+	}
 
-		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), id), _BLOCK);
+	static void registerBlock(ModContainer mod, String id, Block block, QuiltItemSettings itemSettings)
+	{
+		final Item  _ITEM  = new BlockItem(block, itemSettings);
+
+		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), id), block);
 		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), id), _ITEM);
-
-		return _BLOCK;
 	}
 
 	static QuiltBlockSettings CONCRETE_SETTINGS = QuiltBlockSettings.create()
@@ -40,39 +41,54 @@ public class ModBlocks
 		.requiresTool()
 		.strength(1.5F, 6.0F);
 
+	public static final Block CEILING_TILE = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
+
+	public static final Block CONCRETE_FLOOR             = makeBlock(CONCRETE_SETTINGS);
+	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(CONCRETE_SETTINGS);
+	public static final Block CONCRETE_WALL              = makeBlock(CONCRETE_SETTINGS);
+	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS);
+	public static final Block CONCRETE_WALL_TOP          = makeBlock(CONCRETE_SETTINGS);
+	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(CONCRETE_SETTINGS);
+
+	public static final Block CEILING = makeBlock(CONCRETE_SETTINGS);
+
+	public static final ToggleLight CEILING_LIGHT = new ToggleLight(QuiltBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0);
+
+	public static final SubflooringBlock SUBFLOORING = new SubflooringBlock(QuiltBlockSettings.copyOf(Blocks.OAK_PLANKS));
+
+	public static final WetBlock WET_CEILING = new WetBlock(CONCRETE_SETTINGS, 25F);
+	public static final WetBlock WET_CEILING_TILE = new WetBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F);
+
 	public static void register(ModContainer mod)
 	{
-		final Block CEILING_TILE = registerBlock(mod, "ceiling_tile", QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "ceiling_tile", CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
 
+		registerBlock(mod, "concrete_floor",       CONCRETE_FLOOR, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "dirty_concrete_floor", DIRTY_CONCRETE_FLOOR, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "concrete_wall",        CONCRETE_WALL, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "concrete_wall_top",    CONCRETE_WALL_TOP, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "concrete_wall_bottom", CONCRETE_WALL_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
 
-		final Block CONCRETE_FLOOR       = registerBlock(mod, "concrete_floor",       CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
-		final Block CONCRETE_WALL        = registerBlock(mod, "concrete_wall",        CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
-		final Block CONCRETE_WALL_TOP    = registerBlock(mod, "concrete_wall_top",    CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
-		final Block CONCRETE_WALL_BOTTOM = registerBlock(mod, "concrete_wall_bottom", CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "ceiling", CEILING, Nullzone.ITEM_NO_SETTINGS);
 
-		final Block CEILING = registerBlock(mod, "ceiling", CONCRETE_SETTINGS, Nullzone.ITEM_NO_SETTINGS);
+		// Concrete Stairs
+		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "concrete_wall_stairs"), CONCRETE_WALL_STAIRS);
+		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "concrete_wall_stairs"), new BlockItem(CONCRETE_WALL_STAIRS, Nullzone.ITEM_NO_SETTINGS));
+
 
 		// Sub Flooring
-		final SubflooringBlock SUBFLOORING = new SubflooringBlock(QuiltBlockSettings.copyOf(Blocks.OAK_PLANKS));
-
 		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "subflooring"), SUBFLOORING);
 		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "subflooring"), new BlockItem(SUBFLOORING, Nullzone.ITEM_NO_SETTINGS));
 
 		// Ceiling Light
-		final ToggleLight CEILING_LIGHT = new ToggleLight(QuiltBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0);
-
 		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "ceiling_light"), CEILING_LIGHT);
 		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "ceiling_light"), new BlockItem(CEILING_LIGHT, Nullzone.ITEM_NO_SETTINGS));
 
 		// Wet Ceiling
-		final WetBlock WET_CEILING = new WetBlock(CONCRETE_SETTINGS, 25F);
-
 		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "wet_ceiling"), WET_CEILING);
 		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "wet_ceiling"), new BlockItem(WET_CEILING, Nullzone.ITEM_NO_SETTINGS));
 
 		// Wet Ceiling Tile
-		final WetBlock WET_CEILING_TILE = new WetBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F);
-
 		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "wet_ceiling_tile"), WET_CEILING_TILE);
 		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "wet_ceiling_tile"), new BlockItem(WET_CEILING_TILE, Nullzone.ITEM_NO_SETTINGS));
 

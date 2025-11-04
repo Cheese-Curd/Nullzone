@@ -1,9 +1,6 @@
 package io.github.cheese_curd.nullzone;
 
-import io.github.cheese_curd.nullzone.world.biomes.chunkgen.ConcreteHallsChunkGen;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -18,8 +15,6 @@ import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collections;
 
 public class Nullzone implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("Nullzone");

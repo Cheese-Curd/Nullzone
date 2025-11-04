@@ -1,7 +1,7 @@
 package io.github.cheese_curd.nullzone;
 
 import com.mojang.serialization.Codec;
-import io.github.cheese_curd.nullzone.world.biomes.chunkgen.ConcreteHallsChunkGen;
+import io.github.cheese_curd.nullzone.world.chunkgen.ConcreteHallsChunkGen;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;

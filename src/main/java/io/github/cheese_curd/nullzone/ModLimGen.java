@@ -2,7 +2,7 @@ package io.github.cheese_curd.nullzone;
 
 import com.mojang.serialization.Lifecycle;
 import io.github.cheese_curd.nullzone.world.biomes.ConcreteHallsBiome;
-import io.github.cheese_curd.nullzone.world.biomes.chunkgen.ConcreteHallsChunkGen;
+import io.github.cheese_curd.nullzone.world.chunkgen.ConcreteHallsChunkGen;
 import net.ludocrypt.limlib.api.LimlibRegistrar;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks;
 import net.ludocrypt.limlib.api.LimlibWorld;
@@ -30,7 +30,7 @@ public class ModLimGen implements LimlibRegistrar
 		new LimlibWorld(
 			() -> new DimensionType(
 				OptionalLong.empty(),
-				true,
+				false,
 				true,
 				false,
 				false,
@@ -40,7 +40,7 @@ public class ModLimGen implements LimlibRegistrar
 				-32, 144, 144,
 				BlockTags.INFINIBURN_OVERWORLD,
 				DimensionTypes.OVERWORLD_ID,
-				0,
+				1,
 				new DimensionType.MonsterSettings(
 					false,
 					false,
@@ -57,7 +57,7 @@ public class ModLimGen implements LimlibRegistrar
 						new FixedBiomeSource(registry
 							.get(RegistryKeys.BIOME)
 							.getHolder(NullBiomes.CONCRETE_HALLS_BIOME)
-							.get())
+							.get()), 6, 6, 0
 					)
 				)
 		);
