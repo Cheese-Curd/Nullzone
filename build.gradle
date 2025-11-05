@@ -34,6 +34,16 @@ loom {
 			// configuration("exampleShadedConfigurationName")
 		}
 	}
+
+	runs {
+		datagen {
+			server()
+			name "Data Generation"
+			vmArg "-Dfabric-api.datagen"
+			vmArg "-Dfabric-api.datagen.output-dir=${project.file("src/main/generated")}"
+			runDir "build/datagen"
+		}
+	}
 }
 
 // All the dependencies are declared at gradle/libs.version.toml and referenced with "libs.<id>"

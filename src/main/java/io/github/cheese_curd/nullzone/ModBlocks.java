@@ -19,11 +19,23 @@ import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModBlocks
 {
-	static Block makeBlock(QuiltBlockSettings blockSettings)
-	{
-		return new Block(blockSettings);
+	public static final List<Block> MOD_BLOCKS        = new ArrayList<>();
+	public static final List<Block> MOD_BLOCKS_MODELS = new ArrayList<>();
+
+	static Block makeBlock(QuiltBlockSettings blockSettings, boolean autoGenDrops, boolean autoGenModel) {
+		Block block = new Block(blockSettings);
+
+		if (autoGenDrops)
+			MOD_BLOCKS.add(block);
+		if (autoGenModel)
+			MOD_BLOCKS_MODELS.add(block);
+
+		return block;
 	}
 
 	static void registerBlock(ModContainer mod, String id, Block block, QuiltItemSettings itemSettings)
@@ -41,16 +53,16 @@ public class ModBlocks
 		.requiresTool()
 		.strength(1.5F, 6.0F);
 
-	public static final Block CEILING_TILE = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
+	public static final Block CEILING_TILE = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), true, true);
 
-	public static final Block CONCRETE_FLOOR             = makeBlock(CONCRETE_SETTINGS);
-	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(CONCRETE_SETTINGS);
-	public static final Block CONCRETE_WALL              = makeBlock(CONCRETE_SETTINGS);
-	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS);
-	public static final Block CONCRETE_WALL_TOP          = makeBlock(CONCRETE_SETTINGS);
-	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(CONCRETE_SETTINGS);
+	public static final Block CONCRETE_FLOOR             = makeBlock(CONCRETE_SETTINGS, true, true);
+	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(CONCRETE_SETTINGS, true, true);
+	public static final Block CONCRETE_WALL              = makeBlock(CONCRETE_SETTINGS, true, true);
+	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS, true);
+	public static final Block CONCRETE_WALL_TOP          = makeBlock(CONCRETE_SETTINGS, true);
+	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(CONCRETE_SETTINGS, true);
 
-	public static final Block CEILING = makeBlock(CONCRETE_SETTINGS);
+	public static final Block CEILING = makeBlock(CONCRETE_SETTINGS, true, true);
 
 	public static final ToggleLight CEILING_LIGHT = new ToggleLight(QuiltBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0);
 

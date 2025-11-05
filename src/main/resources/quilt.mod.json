@@ -33,5 +33,10 @@
             }
         ]
     },
-    "mixin": "nullzone.mixins.json"
+    "mixin": "nullzone.mixins.json",
+		"quilt_dataloader": {
+				"data_generator": [
+						"io.github.cheese_curd.nullzone.NullzoneDataGen"
+				]
+		}
 }
