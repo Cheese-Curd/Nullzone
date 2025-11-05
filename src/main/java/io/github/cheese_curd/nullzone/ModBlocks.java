@@ -52,6 +52,7 @@ public class ModBlocks
 		.instrument(NoteBlockInstrument.BASEDRUM)
 		.requiresTool()
 		.strength(1.5F, 6.0F);
+	static QuiltBlockSettings OFFICE_WALL_SETTINGS = QuiltBlockSettings.copyOf(Blocks.OAK_PLANKS);
 
 	public static final Block CEILING_TILE = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), true, true);
 
@@ -71,6 +72,13 @@ public class ModBlocks
 	public static final WetBlock WET_CEILING = new WetBlock(CONCRETE_SETTINGS, 25F);
 	public static final WetBlock WET_CEILING_TILE = new WetBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F);
 
+	// Office
+	public static final Block OFFICE_WALL_TOP    = makeBlock(OFFICE_WALL_SETTINGS, true, false);
+	public static final Block OFFICE_WALL        = makeBlock(OFFICE_WALL_SETTINGS, true, false);
+	public static final Block OFFICE_WALL_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS, true, false);
+
+	public static final Block OFFICE_CARPET = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), true, false);
+
 	public static void register(ModContainer mod)
 	{
 		registerBlock(mod, "ceiling_tile", CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
@@ -82,6 +90,13 @@ public class ModBlocks
 		registerBlock(mod, "concrete_wall_bottom", CONCRETE_WALL_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
 
 		registerBlock(mod, "ceiling", CEILING, Nullzone.ITEM_NO_SETTINGS);
+
+		// Office
+		registerBlock(mod, "office_wall_top",    OFFICE_WALL_TOP, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "office_wall",        OFFICE_WALL, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "office_wall_bottom", OFFICE_WALL_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
+
+		registerBlock(mod, "office_carpet", OFFICE_CARPET, Nullzone.ITEM_NO_SETTINGS);
 
 		// Concrete Stairs
 //		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "concrete_wall_stairs"), CONCRETE_WALL_STAIRS);
