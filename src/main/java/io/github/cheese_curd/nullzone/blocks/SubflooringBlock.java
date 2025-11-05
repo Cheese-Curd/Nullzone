@@ -13,30 +13,16 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class SubflooringBlock extends Block {
-	public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.Type.HORIZONTAL);
-
+public class SubflooringBlock extends RandomRotatedBlock {
 	private static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0);
 
 	public SubflooringBlock(Settings settings) {
 		super(settings);
-		setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH));
-	}
-
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(FACING);
 	}
 
 	@Override
 	public boolean hasSidedTransparency(BlockState state) {
 		return true;
-	}
-
-	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		Direction randomDirection = Direction.Type.HORIZONTAL.random(ctx.getWorld().getRandom());
-		return getDefaultState().with(FACING, randomDirection);
 	}
 
 	@Override
