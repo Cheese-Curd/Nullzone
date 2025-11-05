@@ -24,16 +24,16 @@ import java.util.List;
 
 public class ModBlocks
 {
-	public static final List<Block> MOD_BLOCKS        = new ArrayList<>();
-	public static final List<Block> MOD_BLOCKS_MODELS = new ArrayList<>();
+//	public static final List<Block> MOD_BLOCKS        = new ArrayList<>();
+//	public static final List<Block> MOD_BLOCKS_MODELS = new ArrayList<>();
 
 	static Block makeBlock(QuiltBlockSettings blockSettings, boolean autoGenDrops, boolean autoGenModel) {
 		Block block = new Block(blockSettings);
 
-		if (autoGenDrops)
-			MOD_BLOCKS.add(block);
-		if (autoGenModel)
-			MOD_BLOCKS_MODELS.add(block);
+//		if (autoGenDrops)
+//			MOD_BLOCKS.add(block);
+//		if (autoGenModel)
+//			MOD_BLOCKS_MODELS.add(block);
 
 		return block;
 	}
@@ -58,7 +58,7 @@ public class ModBlocks
 	public static final Block CONCRETE_FLOOR             = makeBlock(CONCRETE_SETTINGS, true, true);
 	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(CONCRETE_SETTINGS, true, true);
 	public static final Block CONCRETE_WALL              = makeBlock(CONCRETE_SETTINGS, true, true);
-	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS);
+//	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS);
 	public static final Block CONCRETE_WALL_TOP          = makeBlock(CONCRETE_SETTINGS, true, false);
 	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(CONCRETE_SETTINGS, true, false);
 
@@ -84,8 +84,8 @@ public class ModBlocks
 		registerBlock(mod, "ceiling", CEILING, Nullzone.ITEM_NO_SETTINGS);
 
 		// Concrete Stairs
-		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "concrete_wall_stairs"), CONCRETE_WALL_STAIRS);
-		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "concrete_wall_stairs"), new BlockItem(CONCRETE_WALL_STAIRS, Nullzone.ITEM_NO_SETTINGS));
+//		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "concrete_wall_stairs"), CONCRETE_WALL_STAIRS);
+//		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "concrete_wall_stairs"), new BlockItem(CONCRETE_WALL_STAIRS, Nullzone.ITEM_NO_SETTINGS));
 
 
 		// Sub Flooring

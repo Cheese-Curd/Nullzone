@@ -15,13 +15,13 @@ import java.util.List;
 
 public class ModItems
 {
-	public static final List<Item> MOD_ITEMS = new ArrayList<>();
+//	public static final List<Item> MOD_ITEMS = new ArrayList<>();
 
 	static Item makeItem(QuiltItemSettings itemSettings, boolean autoGenModel) {
 		Item item = new Item(itemSettings);
 
-		if (autoGenModel)
-			MOD_ITEMS.add(item);
+//		if (autoGenModel)
+//			MOD_ITEMS.add(item);
 
 		return item;
 	}
