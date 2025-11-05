@@ -58,9 +58,9 @@ public class ModBlocks
 	public static final Block CONCRETE_FLOOR             = makeBlock(CONCRETE_SETTINGS, true, true);
 	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(CONCRETE_SETTINGS, true, true);
 	public static final Block CONCRETE_WALL              = makeBlock(CONCRETE_SETTINGS, true, true);
-	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS, true);
-	public static final Block CONCRETE_WALL_TOP          = makeBlock(CONCRETE_SETTINGS, true);
-	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(CONCRETE_SETTINGS, true);
+	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS);
+	public static final Block CONCRETE_WALL_TOP          = makeBlock(CONCRETE_SETTINGS, true, false);
+	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(CONCRETE_SETTINGS, true, false);
 
 	public static final Block CEILING = makeBlock(CONCRETE_SETTINGS, true, true);
 
