@@ -17,16 +17,16 @@ public class ModModelProvider extends FabricModelProvider {
 
 	@Override
 	public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-		for (Block block : ModBlocks.MOD_BLOCKS_MODELS)
-			blockStateModelGenerator.registerSimpleCubeAll(block);
-
-		blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.WET_CEILING_TILE);
-		blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.WET_CEILING);
+//		for (Block block : ModBlocks.MOD_BLOCKS_MODELS)
+//			blockStateModelGenerator.registerSimpleCubeAll(block);
+//
+//		blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.WET_CEILING_TILE);
+//		blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.WET_CEILING);
 	}
 
 	@Override
 	public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-		for (Item item : ModItems.MOD_ITEMS)
-			itemModelGenerator.register(item, Models.SINGLE_LAYER_ITEM);
+//		for (Item item : ModItems.MOD_ITEMS)
+//			itemModelGenerator.register(item, Models.SINGLE_LAYER_ITEM);
 	}
 }

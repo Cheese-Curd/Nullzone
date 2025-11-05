@@ -22,9 +22,9 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
 
 			.add(ModBlocks.CONCRETE_WALL_TOP)
 			.add(ModBlocks.CONCRETE_WALL)
-			.add(ModBlocks.CONCRETE_WALL_BOTTOM)
+			.add(ModBlocks.CONCRETE_WALL_BOTTOM);
 
-			.add(ModBlocks.CONCRETE_WALL_STAIRS);
+//			.add(ModBlocks.CONCRETE_WALL_STAIRS);
 
 		getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
 			.add(ModBlocks.CEILING)
@@ -33,8 +33,8 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
 
 			.add(ModBlocks.CONCRETE_WALL_TOP)
 			.add(ModBlocks.CONCRETE_WALL)
-			.add(ModBlocks.CONCRETE_WALL_BOTTOM)
+			.add(ModBlocks.CONCRETE_WALL_BOTTOM);
 
-			.add(ModBlocks.CONCRETE_WALL_STAIRS);
+//			.add(ModBlocks.CONCRETE_WALL_STAIRS);
 	}
 }

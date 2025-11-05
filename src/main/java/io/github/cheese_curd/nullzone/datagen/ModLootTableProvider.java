@@ -13,12 +13,12 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
 
 	@Override
 	public void generate() {
-		for (Block block : ModBlocks.MOD_BLOCKS)
-			addDrop(block);
-
-		addDrop(ModBlocks.SUBFLOORING);
-
-		addDrop(ModBlocks.WET_CEILING);
-		addDrop(ModBlocks.WET_CEILING_TILE);
+//		for (Block block : ModBlocks.MOD_BLOCKS)
+//			addDrop(block);
+//
+//		addDrop(ModBlocks.SUBFLOORING);
+//
+//		addDrop(ModBlocks.WET_CEILING);
+//		addDrop(ModBlocks.WET_CEILING_TILE);
 	}
 }
