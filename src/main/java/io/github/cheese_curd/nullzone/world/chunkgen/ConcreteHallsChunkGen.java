@@ -56,7 +56,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 	public static NbtGroup createGroup() {
 		NbtGroup.Builder builder = NbtGroup.Builder
 			.create(ModLimGen.CONCRETE_HALLS_ID)
-			.with("decoration", 1, 3)
+			.with("decoration", 1, 4)
 			.with("base", "base")            // Base Room
 			.with("base_dark", "base_dark"); // Base Room (but dark :O)
 
