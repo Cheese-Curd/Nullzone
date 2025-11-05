@@ -1,5 +1,6 @@
 package io.github.cheese_curd.nullzone;
 
+import io.github.cheese_curd.nullzone.blocks.RandomRotatedBlock;
 import io.github.cheese_curd.nullzone.blocks.SubflooringBlock;
 import io.github.cheese_curd.nullzone.blocks.ToggleLight;
 import io.github.cheese_curd.nullzone.blocks.WetBlock;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class ModBlocks
 {
-//	public static final List<Block> MOD_BLOCKS        = new ArrayList<>();
+	public static final List<Block> MOD_BLOCKS        = new ArrayList<>();
 //	public static final List<Block> MOD_BLOCKS_MODELS = new ArrayList<>();
 
 	static Block makeBlock(QuiltBlockSettings blockSettings, boolean autoGenDrops, boolean autoGenModel) {
@@ -41,6 +42,9 @@ public class ModBlocks
 	static void registerBlock(ModContainer mod, String id, Block block, QuiltItemSettings itemSettings)
 	{
 		final Item  _ITEM  = new BlockItem(block, itemSettings);
+
+//		if (addToCreativeMenu)
+		MOD_BLOCKS.add(block);
 
 		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), id), block);
 		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), id), _ITEM);
@@ -74,7 +78,7 @@ public class ModBlocks
 
 	// Office
 	public static final Block OFFICE_WALL_TOP    = makeBlock(OFFICE_WALL_SETTINGS, true, false);
-	public static final Block OFFICE_WALL        = makeBlock(OFFICE_WALL_SETTINGS, true, false);
+	public static final RandomRotatedBlock OFFICE_WALL = new RandomRotatedBlock(OFFICE_WALL_SETTINGS);
 	public static final Block OFFICE_WALL_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS, true, false);
 
 	public static final Block OFFICE_CARPET = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), true, false);
@@ -104,36 +108,19 @@ public class ModBlocks
 
 
 		// Sub Flooring
-		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "subflooring"), SUBFLOORING);
-		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "subflooring"), new BlockItem(SUBFLOORING, Nullzone.ITEM_NO_SETTINGS));
+		registerBlock(mod, "subflooring", SUBFLOORING, Nullzone.ITEM_NO_SETTINGS);
 
 		// Ceiling Light
-		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "ceiling_light"), CEILING_LIGHT);
-		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "ceiling_light"), new BlockItem(CEILING_LIGHT, Nullzone.ITEM_NO_SETTINGS));
+		registerBlock(mod, "ceiling_light", CEILING_LIGHT, Nullzone.ITEM_NO_SETTINGS);
 
-		// Wet Ceiling
-		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "wet_ceiling"), WET_CEILING);
-		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "wet_ceiling"), new BlockItem(WET_CEILING, Nullzone.ITEM_NO_SETTINGS));
+		// Wet Blocks
+		registerBlock(mod, "wet_ceiling", WET_CEILING, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "wet_ceiling_tile", WET_CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
 
-		// Wet Ceiling Tile
-		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "wet_ceiling_tile"), WET_CEILING_TILE);
-		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), "wet_ceiling_tile"), new BlockItem(WET_CEILING_TILE, Nullzone.ITEM_NO_SETTINGS));
 
 		ItemGroupEvents.modifyEntriesEvent(Nullzone.NULLZONE_GROUP_KEY).register(entries -> {
-			entries.addItem(CEILING_TILE.asItem());
-			entries.addItem(WET_CEILING_TILE.asItem());
-
-			entries.addItem(CEILING_LIGHT.asItem());
-
-			entries.addItem(CONCRETE_FLOOR.asItem());
-			entries.addItem(CONCRETE_WALL.asItem());
-			entries.addItem(CONCRETE_WALL_TOP.asItem());
-			entries.addItem(CONCRETE_WALL_BOTTOM.asItem());
-
-			entries.addItem(CEILING.asItem());
-			entries.addItem(WET_CEILING.asItem());
-
-			entries.addItem(SUBFLOORING.asItem());
+			for (Block block : MOD_BLOCKS)
+				entries.addItem(block.asItem());
 		});
 	}
 }
