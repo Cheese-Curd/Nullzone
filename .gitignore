@@ -40,3 +40,8 @@ replay_*.log
 *.jfr
 
 src/main/generated/.cache/
+src/main/generated/.cache/1b674fc76cd0c5a4e6c3359ee98244ba1686d1de
+src/main/generated/.cache/3d40865e3116603a54af278fa4517ccec5f72bfc
+src/main/generated/.cache/8a839331c5322c3d01de52e809b634dd5e050b01
+src/main/generated/.cache/ad6edbbc3da8f1859a079fa3b50f99ad901a5a25
+src/main/generated/.cache/cb3f11e22e30cb3ba7a81ef9150a28a5ae3a2d37
