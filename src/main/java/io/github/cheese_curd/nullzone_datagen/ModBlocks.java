@@ -75,6 +75,10 @@ public class ModBlocks
 	public static final Block OFFICE_WALL        = makeBlock(OFFICE_WALL_SETTINGS, true, true);
 	public static final Block OFFICE_WALL_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS, true, false);
 
+	public static final Block WALLPAPER_TOP    = makeBlock(OFFICE_WALL_SETTINGS, true, false);
+	public static final Block WALLPAPER        = makeBlock(OFFICE_WALL_SETTINGS, true, true);
+	public static final Block WALLPAPER_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS, true, false);
+
 	public static final Block OFFICE_CARPET = makeBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL), true, false);
 
 	public static void register()
@@ -93,6 +97,10 @@ public class ModBlocks
 		registerBlock("office_wall_top",    OFFICE_WALL_TOP, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock("office_wall",        OFFICE_WALL, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock("office_wall_bottom", OFFICE_WALL_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
+
+		registerBlock("wallpaper_top",    WALLPAPER_TOP, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock("wallpaper",        WALLPAPER, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock("wallpaper_bottom", WALLPAPER_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
 
 		registerBlock("office_carpet", OFFICE_CARPET, Nullzone.ITEM_NO_SETTINGS);
 
