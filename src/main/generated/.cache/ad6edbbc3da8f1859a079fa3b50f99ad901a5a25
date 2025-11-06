@@ -1,4 +1,6 @@
-// 1.20.1	2025-11-05T21:00:29.6572398	Nullzone DATAGEN/Block Loot Tables
+// 1.20.1	2025-11-05T21:26:37.0726631	Nullzone DATAGEN/Block Loot Tables
+809d6b061223e4ecfeef4234bd5ac552fdf88a52 data\nullzone\loot_tables\blocks\wallpaper_bottom.json
+1e8f9fd8f4d58f9adffb3d557981da1d39375b4c data\nullzone\loot_tables\blocks\wallpaper_top.json
 a68e8a3578ae1c3b9305e54a601ea3cf0e5a1a3b data\nullzone\loot_tables\blocks\concrete_wall.json
 398f1644fa37d925f116e61807b8dfe5f0a8eb14 data\nullzone\loot_tables\blocks\office_carpet.json
 d960fa74718032b50a5da7f067e8226b5c5101d3 data\nullzone\loot_tables\blocks\subflooring.json
@@ -8,6 +10,7 @@ dbc65c8f6eaff65a33974e9d01d8ade21f89fa5d data\nullzone\loot_tables\blocks\concre
 3f510b53efaa1dd5e63a206266dec9c8fc1050cf data\nullzone\loot_tables\blocks\office_wall.json
 be86f86c12700db3f548ab430ebfcb0540f3b522 data\nullzone\loot_tables\blocks\office_wall_top.json
 93ffc9633eb8d03ed92458e4263088cd11096db9 data\nullzone\loot_tables\blocks\concrete_wall_top.json
+ebc0641da7692df52254888d6eed6099b9b6b2b3 data\nullzone\loot_tables\blocks\wallpaper.json
 da9bcd06fa4c18be8a59a35e77e3836166266902 data\nullzone\loot_tables\blocks\dirty_concrete_floor.json
 5d4196d4070b7402fda72dbffb410727bd91007f data\nullzone\loot_tables\blocks\office_wall_bottom.json
 c331b4a851520bdd4a23148c3353ceb50518b102 data\nullzone\loot_tables\blocks\wet_ceiling_tile.json
