@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.PillarBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -22,16 +23,12 @@ public class ModBlocks
 {
 	public static final List<Block> MOD_BLOCKS        = new ArrayList<>();
 	public static final List<Block> MOD_BLOCKS_MODELS = new ArrayList<>();
+    public static final List<Block> MOD_BLOCKS_TB_MODELS = new ArrayList<>();
 
-	static Block makeBlock(FabricBlockSettings blockSettings, boolean autoGenDrops, boolean autoGenModel) {
-		Block block = new Block(blockSettings);
+	static Block makeBlock(Block block) {
+        MOD_BLOCKS_MODELS.add(block);
 
-		if (autoGenDrops)
-			MOD_BLOCKS.add(block);
-		if (autoGenModel)
-			MOD_BLOCKS_MODELS.add(block);
-
-		return block;
+        return block;
 	}
 
 	static void registerBlock(String id, Block block, FabricItemSettings itemSettings)
@@ -52,37 +49,46 @@ public class ModBlocks
 		.strength(1.5F, 6.0F);
 	static FabricBlockSettings OFFICE_WALL_SETTINGS = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS);
 
-	public static final Block CEILING_TILE = makeBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL), true, true);
+	public static final Block CEILING_TILE = makeBlock(new Block(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
 
-	public static final Block CONCRETE_FLOOR             = makeBlock(CONCRETE_SETTINGS, true, true);
-	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(CONCRETE_SETTINGS, true, true);
-	public static final Block CONCRETE_WALL              = makeBlock(CONCRETE_SETTINGS, true, true);
+	public static final Block CONCRETE_FLOOR             = makeBlock(new Block(CONCRETE_SETTINGS));
+	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(new Block(CONCRETE_SETTINGS));
+	public static final Block CONCRETE_WALL              = makeBlock(new Block(CONCRETE_SETTINGS));
 //	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS);
-	public static final Block CONCRETE_WALL_TOP          = makeBlock(CONCRETE_SETTINGS, true, false);
-	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(CONCRETE_SETTINGS, true, false);
+	public static final Block CONCRETE_WALL_TOP          = makeBlock(new Block(CONCRETE_SETTINGS));
+	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(new Block(CONCRETE_SETTINGS));
 
-	public static final Block CEILING = makeBlock(CONCRETE_SETTINGS, true, true);
+	public static final Block CEILING = makeBlock(new Block(CONCRETE_SETTINGS));
 
-	public static final ToggleLight CEILING_LIGHT = new ToggleLight(FabricBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0);
+	public static final ToggleLight CEILING_LIGHT = (ToggleLight) makeBlock(new ToggleLight(FabricBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0));
 
-	public static final SubflooringBlock SUBFLOORING = new SubflooringBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS));
+	public static final SubflooringBlock SUBFLOORING = (SubflooringBlock) makeBlock(new SubflooringBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)));
 
-	public static final WetBlock WET_CEILING = new WetBlock(CONCRETE_SETTINGS, 25F);
-	public static final WetBlock WET_CEILING_TILE = new WetBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F);
+	public static final WetBlock WET_CEILING = (WetBlock) makeBlock(new WetBlock(CONCRETE_SETTINGS, 25F));
+	public static final WetBlock WET_CEILING_TILE = (WetBlock) makeBlock(new WetBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F));
 
 	// Office
-	public static final Block OFFICE_WALL_TOP    = makeBlock(OFFICE_WALL_SETTINGS, true, false);
-	public static final Block OFFICE_WALL        = makeBlock(OFFICE_WALL_SETTINGS, true, true);
-	public static final Block OFFICE_WALL_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS, true, false);
+	public static final Block OFFICE_WALL_TOP    = makeBlock(new Block(OFFICE_WALL_SETTINGS));
+	public static final Block OFFICE_WALL        = makeBlock(new Block(OFFICE_WALL_SETTINGS));
+	public static final Block OFFICE_WALL_BOTTOM = makeBlock(new Block(OFFICE_WALL_SETTINGS));
 
-	public static final Block WALLPAPER_TOP    = makeBlock(OFFICE_WALL_SETTINGS, true, false);
-	public static final Block WALLPAPER        = makeBlock(OFFICE_WALL_SETTINGS, true, true);
-	public static final Block WALLPAPER_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS, true, false);
+	public static final Block WALLPAPER_TOP    = makeBlock(new Block(OFFICE_WALL_SETTINGS));
+	public static final Block WALLPAPER        = makeBlock(new Block(OFFICE_WALL_SETTINGS));
+	public static final Block WALLPAPER_BOTTOM = makeBlock(new Block(OFFICE_WALL_SETTINGS));
 
-	public static final Block OFFICE_CARPET = makeBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL), true, false);
+	public static final Block OFFICE_CARPET = makeBlock(new Block(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
 
 	public static void register()
 	{
+        MOD_BLOCKS_TB_MODELS.add(CONCRETE_WALL_TOP);
+        MOD_BLOCKS_TB_MODELS.add(CONCRETE_WALL_BOTTOM);
+
+        MOD_BLOCKS_TB_MODELS.add(OFFICE_WALL_TOP);
+        MOD_BLOCKS_TB_MODELS.add(OFFICE_WALL_BOTTOM);
+
+        MOD_BLOCKS_TB_MODELS.add(WALLPAPER_TOP);
+        MOD_BLOCKS_TB_MODELS.add(WALLPAPER_BOTTOM);
+
 		registerBlock("ceiling_tile", CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
 
 		registerBlock("concrete_floor",       CONCRETE_FLOOR, Nullzone.ITEM_NO_SETTINGS);
