@@ -25,12 +25,10 @@ import java.util.List;
 
 public class ModBlocks
 {
-	public static final List<Block> MOD_BLOCKS        = new ArrayList<>();
+	public static final List<Block> MOD_BLOCKS = new ArrayList<>();
 
 	static Block makeBlock(QuiltBlockSettings blockSettings) {
-		Block block = new Block(blockSettings);
-
-		return block;
+		return new Block(blockSettings);
 	}
 
 	static void registerBlock(ModContainer mod, String id, Block block, QuiltItemSettings itemSettings)
