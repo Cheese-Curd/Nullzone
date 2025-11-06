@@ -74,6 +74,10 @@ public class ModBlocks
 	public static final Block OFFICE_WALL        = makeBlock(OFFICE_WALL_SETTINGS);
 	public static final Block OFFICE_WALL_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS);
 
+	public static final Block WALLPAPER_TOP    = makeBlock(OFFICE_WALL_SETTINGS);
+	public static final Block WALLPAPER        = makeBlock(OFFICE_WALL_SETTINGS);
+	public static final Block WALLPAPER_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS);
+
 	public static final Block OFFICE_CARPET = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
 
 	public static void register(ModContainer mod)

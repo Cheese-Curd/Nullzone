@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+    "textures": {
+      "up": "nullzone:block/office_wall_top2",
+      "down": "nullzone:block/wallpaper",
+      "north": "nullzone:block/wallpaper_top",
+      "south": "nullzone:block/wallpaper_top",
+      "west": "nullzone:block/wallpaper_top",
+      "east": "nullzone:block/wallpaper_top",
+      "particle": "nullzone:block/wallpaper_top"
+    }
+}
