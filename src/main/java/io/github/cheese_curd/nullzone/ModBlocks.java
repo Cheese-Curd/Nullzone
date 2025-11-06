@@ -97,6 +97,10 @@ public class ModBlocks
 		registerBlock(mod, "office_wall",        OFFICE_WALL, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "office_wall_bottom", OFFICE_WALL_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
 
+		registerBlock(mod, "wallpaper_top",    WALLPAPER_TOP, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "wallpaper",        WALLPAPER, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "wallpaper_bottom", WALLPAPER_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
+
 		registerBlock(mod, "office_carpet", OFFICE_CARPET, Nullzone.ITEM_NO_SETTINGS);
 
 		// Concrete Stairs
