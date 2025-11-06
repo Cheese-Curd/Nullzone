@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "nullzone:block/subflooring" },
-    "facing=south": { "model": "nullzone:block/subflooring", "y": 180 },
-    "facing=west":  { "model": "nullzone:block/subflooring", "y": 270 },
-    "facing=east":  { "model": "nullzone:block/subflooring", "y": 90 }
-  }
-}

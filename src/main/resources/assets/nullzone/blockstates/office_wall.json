@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "nullzone:block/office_wall" },
-    "facing=south": { "model": "nullzone:block/office_wall", "y": 180 },
-    "facing=west":  { "model": "nullzone:block/office_wall", "y": 270 },
-    "facing=east":  { "model": "nullzone:block/office_wall", "y": 90 }
-  }
-}

@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "on=false": { "model": "nullzone:block/off_ceiling_light" },
-    "on=true":  { "model": "nullzone:block/on_ceiling_light" }
-  }
-}
