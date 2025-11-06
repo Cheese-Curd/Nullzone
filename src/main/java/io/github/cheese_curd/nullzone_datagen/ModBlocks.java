@@ -59,7 +59,7 @@ public class ModBlocks
 
 //	public static final ToggleLight CEILING_LIGHT = (ToggleLight) makeBlock(new ToggleLight(FabricBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0));
 
-	public static final SubflooringBlock SUBFLOORING = (SubflooringBlock) makeBlock(new SubflooringBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)));
+//	public static final SubflooringBlock SUBFLOORING = (SubflooringBlock) makeBlock(new SubflooringBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)));
 
 	public static final WetBlock WET_CEILING = (WetBlock) makeBlock(new WetBlock(CONCRETE_SETTINGS, 25F));
 	public static final WetBlock WET_CEILING_TILE = (WetBlock) makeBlock(new WetBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F));
@@ -113,7 +113,7 @@ public class ModBlocks
 
 
 		// Sub Flooring
-		registerBlock("subflooring", SUBFLOORING, Nullzone.ITEM_NO_SETTINGS);
+//		registerBlock("subflooring", SUBFLOORING, Nullzone.ITEM_NO_SETTINGS);
 
 		// Ceiling Light
 //		registerBlock("ceiling_light", CEILING_LIGHT, Nullzone.ITEM_NO_SETTINGS);
