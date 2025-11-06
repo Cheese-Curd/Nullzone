@@ -4,9 +4,7 @@
     "package": "io.github.cheese_curd.nullzone.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [],
-    "client": [
-        "TitleScreenMixin"
-    ],
+    "client": [],
     "injectors": {
         "defaultRequire": 1
     }
