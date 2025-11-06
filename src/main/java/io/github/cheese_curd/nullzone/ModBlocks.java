@@ -5,10 +5,7 @@ import io.github.cheese_curd.nullzone.blocks.SubflooringBlock;
 import io.github.cheese_curd.nullzone.blocks.ToggleLight;
 import io.github.cheese_curd.nullzone.blocks.WetBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.StairsBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -76,7 +73,7 @@ public class ModBlocks
 	public static final Block WALLPAPER        = makeBlock(OFFICE_WALL_SETTINGS);
 	public static final Block WALLPAPER_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS);
 
-	public static final Block OFFICE_CARPET = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
+	public static final Block OFFICE_CARPET = new GlazedTerracottaBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
 
 	public static void register(ModContainer mod)
 	{

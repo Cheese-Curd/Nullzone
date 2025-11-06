@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "nullzone:block/office_carpet"
-    }
+    "facing=north": { "model": "nullzone:block/office_carpet" },
+    "facing=south": { "model": "nullzone:block/office_carpet", "y": 180 },
+    "facing=west":  { "model": "nullzone:block/office_carpet", "y": 270 },
+    "facing=east":  { "model": "nullzone:block/office_carpet", "y": 90 }
   }
 }
