@@ -5,10 +5,7 @@ import io.github.cheese_curd.nullzone_datagen.blocks.ToggleLight;
 import io.github.cheese_curd.nullzone_datagen.blocks.WetBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.PillarBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -55,12 +52,12 @@ public class ModBlocks
 	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(new Block(CONCRETE_SETTINGS));
 	public static final Block CONCRETE_WALL              = makeBlock(new Block(CONCRETE_SETTINGS));
 //	public static final StairsBlock CONCRETE_WALL_STAIRS = new StairsBlock(CONCRETE_WALL.getDefaultState(), CONCRETE_SETTINGS);
-	public static final Block CONCRETE_WALL_TOP          = makeBlock(new Block(CONCRETE_SETTINGS));
-	public static final Block CONCRETE_WALL_BOTTOM       = makeBlock(new Block(CONCRETE_SETTINGS));
+	public static final Block CONCRETE_WALL_TOP          = new Block(CONCRETE_SETTINGS);
+	public static final Block CONCRETE_WALL_BOTTOM       = new Block(CONCRETE_SETTINGS);
 
 	public static final Block CEILING = makeBlock(new Block(CONCRETE_SETTINGS));
 
-	public static final ToggleLight CEILING_LIGHT = (ToggleLight) makeBlock(new ToggleLight(FabricBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0));
+//	public static final ToggleLight CEILING_LIGHT = (ToggleLight) makeBlock(new ToggleLight(FabricBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0));
 
 	public static final SubflooringBlock SUBFLOORING = (SubflooringBlock) makeBlock(new SubflooringBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)));
 
@@ -68,15 +65,15 @@ public class ModBlocks
 	public static final WetBlock WET_CEILING_TILE = (WetBlock) makeBlock(new WetBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F));
 
 	// Office
-	public static final Block OFFICE_WALL_TOP    = makeBlock(new Block(OFFICE_WALL_SETTINGS));
+	public static final Block OFFICE_WALL_TOP    = new Block(OFFICE_WALL_SETTINGS);
 	public static final Block OFFICE_WALL        = makeBlock(new Block(OFFICE_WALL_SETTINGS));
-	public static final Block OFFICE_WALL_BOTTOM = makeBlock(new Block(OFFICE_WALL_SETTINGS));
+	public static final Block OFFICE_WALL_BOTTOM = new Block(OFFICE_WALL_SETTINGS);
 
-	public static final Block WALLPAPER_TOP    = makeBlock(new Block(OFFICE_WALL_SETTINGS));
+	public static final Block WALLPAPER_TOP    = new Block(OFFICE_WALL_SETTINGS);
 	public static final Block WALLPAPER        = makeBlock(new Block(OFFICE_WALL_SETTINGS));
-	public static final Block WALLPAPER_BOTTOM = makeBlock(new Block(OFFICE_WALL_SETTINGS));
+	public static final Block WALLPAPER_BOTTOM = new Block(OFFICE_WALL_SETTINGS);
 
-	public static final Block OFFICE_CARPET = makeBlock(new Block(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
+	public static final Block OFFICE_CARPET = makeBlock(new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
 
 	public static void register()
 	{
@@ -119,7 +116,7 @@ public class ModBlocks
 		registerBlock("subflooring", SUBFLOORING, Nullzone.ITEM_NO_SETTINGS);
 
 		// Ceiling Light
-		registerBlock("ceiling_light", CEILING_LIGHT, Nullzone.ITEM_NO_SETTINGS);
+//		registerBlock("ceiling_light", CEILING_LIGHT, Nullzone.ITEM_NO_SETTINGS);
 
 		// Wet Blocks
 		registerBlock("wet_ceiling", WET_CEILING, Nullzone.ITEM_NO_SETTINGS);
