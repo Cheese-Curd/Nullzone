@@ -26,12 +26,26 @@ public class ModModelProvider extends FabricModelProvider {
             Identifier id    = Registries.BLOCK.getId(block);
             String blockName = id.getPath();
 
+			boolean isBottomBlock = blockName.contains("_bottom");
+	        boolean isTopBlock = blockName.contains("_top");
+
+			String identStr = "blocks/" + blockName;
+
+			Identifier sideTex    = Nullzone.getIdentifier(identStr);
+	        Identifier topTex     = Nullzone.getIdentifier(identStr + "-top");
+	        Identifier bottomText = Nullzone.getIdentifier(identStr + "-bottom");
+
+			if (isBottomBlock)
+				topTex = sideTex;
+	        if (isTopBlock)
+		        bottomText = sideTex;
+
             blockStateModelGenerator.registerSingleton(
                             block,
                             TextureMap.sideTopBottom(block)
-                                    .put(TextureKey.SIDE, Nullzone.getIdentifier(blockName))
-                                    .put(TextureKey.TOP, Nullzone.getIdentifier(blockName + "_top"))
-                                    .put(TextureKey.BOTTOM, Nullzone.getIdentifier(blockName + "_bottom")),
+                                    .put(TextureKey.SIDE, sideTex)
+                                    .put(TextureKey.TOP, topTex)
+                                    .put(TextureKey.BOTTOM, bottomText),
                     Models.CUBE_BOTTOM_TOP
             );
         }
