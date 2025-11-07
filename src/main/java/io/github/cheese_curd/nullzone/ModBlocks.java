@@ -1,14 +1,12 @@
 package io.github.cheese_curd.nullzone;
 
-import io.github.cheese_curd.nullzone.blocks.RandomRotatedBlock;
-import io.github.cheese_curd.nullzone.blocks.SubflooringBlock;
-import io.github.cheese_curd.nullzone.blocks.ToggleLight;
-import io.github.cheese_curd.nullzone.blocks.WetBlock;
+import io.github.cheese_curd.nullzone.blocks.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
@@ -25,7 +23,7 @@ public class ModBlocks
 	public static final List<Block> MOD_BLOCKS = new ArrayList<>();
 
 	static Block makeBlock(QuiltBlockSettings blockSettings) {
-		return new Block(blockSettings);
+		return new NullzoneBlock(blockSettings);
 	}
 
 	static void registerBlock(ModContainer mod, String id, Block block, QuiltItemSettings itemSettings)
@@ -62,7 +60,7 @@ public class ModBlocks
 
 	public static final SubflooringBlock SUBFLOORING = new SubflooringBlock(QuiltBlockSettings.copyOf(Blocks.OAK_PLANKS));
 
-	public static final WetBlock WET_CEILING = new WetBlock(CONCRETE_SETTINGS, 25F);
+	public static final WetBlock WET_CEILING      = new WetBlock(CONCRETE_SETTINGS, 25F);
 	public static final WetBlock WET_CEILING_TILE = new WetBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F);
 
 	// Office
@@ -70,11 +68,14 @@ public class ModBlocks
 	public static final Block OFFICE_WALL        = makeBlock(OFFICE_WALL_SETTINGS);
 	public static final Block OFFICE_WALL_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS);
 
-	public static final Block WALLPAPER_TOP    = makeBlock(OFFICE_WALL_SETTINGS);
-	public static final Block WALLPAPER        = makeBlock(OFFICE_WALL_SETTINGS);
-	public static final Block WALLPAPER_BOTTOM = makeBlock(OFFICE_WALL_SETTINGS);
+	public static final Block CUT_WALLPAPER_TOP    = makeBlock(QuiltBlockSettings.copyOf(Blocks.BRICKS));
+	public static final Block CUT_WALLPAPER        = makeBlock(QuiltBlockSettings.copyOf(Blocks.BRICKS));
 
-	public static final Block OFFICE_CARPET = new GlazedTerracottaBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
+	public static final Block WALLPAPER_TOP    = new CuttableBlock(QuiltBlockSettings.copyOf(Blocks.BRICKS), ModItems.WALL_PAPER, CUT_WALLPAPER_TOP);
+	public static final Block WALLPAPER        = new CuttableBlock(QuiltBlockSettings.copyOf(Blocks.BRICKS), ModItems.WALL_PAPER, CUT_WALLPAPER);
+	public static final Block WALLPAPER_BOTTOM = makeBlock(QuiltBlockSettings.copyOf(Blocks.BRICKS));
+
+	public static final Block OFFICE_CARPET = new RotatableBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
 
 	public static void register(ModContainer mod)
 	{
@@ -93,6 +94,9 @@ public class ModBlocks
 		registerBlock(mod, "office_wall_top",    OFFICE_WALL_TOP, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "office_wall",        OFFICE_WALL, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "office_wall_bottom", OFFICE_WALL_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
+
+		registerBlock(mod, "cut_wallpaper_top",    CUT_WALLPAPER_TOP, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "cut_wallpaper",        CUT_WALLPAPER, Nullzone.ITEM_NO_SETTINGS);
 
 		registerBlock(mod, "wallpaper_top",    WALLPAPER_TOP, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "wallpaper",        WALLPAPER, Nullzone.ITEM_NO_SETTINGS);
