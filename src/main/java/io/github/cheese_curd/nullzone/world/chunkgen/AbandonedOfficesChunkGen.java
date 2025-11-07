@@ -61,7 +61,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 			.with("base", "base")
 			.with("base_dark", "base_dark");
 
-		ChunkGenBase.getAllPieces(builder);
+		ChunkGenBase.getAllPieces(builder, false);
 
 		return builder.build();
 	}

@@ -60,7 +60,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 			.with("base", "base")            // Base Room
 			.with("base_dark", "base_dark"); // Base Room (but dark :O)
 
-		ChunkGenBase.getAllPieces(builder);
+		ChunkGenBase.getAllPieces(builder, true);
 
 		return builder.build();
 	}
