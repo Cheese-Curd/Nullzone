@@ -66,7 +66,7 @@ public class ModLimGen implements LimlibRegistrar
 				.get(),
 			new AbandonedOfficesChunkGen(
 				new FixedBiomeSource(registry.get(RegistryKeys.BIOME)
-					.getHolder(NullBiomes.ABANDONED_OFFICES_BIOME).get()), 6, 6, 0
+					.getHolder(NullBiomes.ABANDONED_OFFICES_BIOME).get()), 12, 6, 0
 			)
 		)
 	);

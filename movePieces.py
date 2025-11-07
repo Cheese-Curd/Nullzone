@@ -1,7 +1,7 @@
 import os
 import shutil
 
-directory = r"./src/main/resources/data/nullzone/structures/nbt/concrete_halls/maze"
+directory = r"./src/main/resources/data/nullzone/structures/nbt/abandoned_offices/"
 
 for filename in os.listdir(directory):
     file_path = os.path.join(directory, filename)

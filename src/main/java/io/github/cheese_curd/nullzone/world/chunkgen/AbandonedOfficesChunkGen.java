@@ -56,7 +56,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 	public static NbtGroup createGroup() {
 		NbtGroup.Builder builder = NbtGroup.Builder
-			.create(ModLimGen.CONCRETE_HALLS_ID)
+			.create(ModLimGen.ABANDONED_OFFICES_ID)
 //			.with("decoration", 1, 4)
 			.with("base", "base")
 			.with("base_dark", "base_dark");
@@ -108,17 +108,17 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 			// Decorate the room
 			// Reason this is before is for rooms that have certain walls that we don't want to overwrite
-			if (random.nextDouble() < 0.5)
-				generateNbt(region, blockPos.up(1), nbtGroup.pick("decoration", random), Manipulation.random(random));
+//			if (random.nextDouble() < 0.5)
+//				generateNbt(region, blockPos.up(1), nbtGroup.pick("decoration", random), Manipulation.random(random));
 
-			if (!dir.isEmpty())
-			{
-				nbtFile = nbtGroup.nbtId("maze/" + dir, dir);
-
-				generateNbt(region, blockPos.up(1), nbtFile);
-			}
-			else
-				Nullzone.LOGGER.info("NO DIRECTION!!");
+//			if (!dir.isEmpty())
+//			{
+//				nbtFile = nbtGroup.nbtId("maze/" + dir, dir);
+//
+//				generateNbt(region, blockPos.up(1), nbtFile);
+//			}
+//			else
+//				Nullzone.LOGGER.info("NO DIRECTION!!");
 
 			if (random.nextDouble() <= 0.25)
 				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
