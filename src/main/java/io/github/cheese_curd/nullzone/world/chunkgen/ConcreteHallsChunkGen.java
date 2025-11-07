@@ -76,25 +76,6 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 		return 4;
 	}
 
-	private void fillBelowZeroWithStone(Chunk chunk, ChunkRegion region) {
-		int minY = region.getBottomY();
-		int maxY = 0;
-
-		BlockState stone = Blocks.STONE.getDefaultState();
-		BlockState bedrock = Blocks.BEDROCK.getDefaultState();
-
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
-
-				chunk.setBlockState(new BlockPos(x, minY, z), bedrock, false);
-
-				for (int y = minY + 1; y < maxY; y++) {
-					chunk.setBlockState(new BlockPos(x, y, z), stone, false);
-				}
-			}
-		}
-	}
-
 	public MazeComponent newMaze(ChunkRegion region, MazeComponent.Vec2i mazePos, int width, int height, RandomGenerator random) {
 		DepthFirstMaze maze = new DepthFirstMaze(width, height, random);
 //		DepthFirstMazeSolver solver = new DepthFirstMazeSolver(maze, random, mazePos);
@@ -118,9 +99,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 		if (piece.getFirst() != MazePiece.E) {
 			Identifier nbtFile;
 
-			// Stole this from LudoCrypt
-			// https://github.com/LudoCrypt/The-Corners/blob/cb8d030ce315d7cac4207dfd5b2ce0fee89b6a7c/src/main/java/net/ludocrypt/corners/world/chunk/CommunalCorridorsChunkGenerator.java#L434
-			String dir = ChunkGenBase.getCellDir(state, mazePos, maze);
+			String dir = ChunkGenBase.getCellDir(state);
 
 			BlockPos blockPos = pos.toBlock();
 
@@ -152,7 +131,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 		ServerLightingProvider lightingProvider, Function<Chunk, CompletableFuture<Either<Chunk,
 			ChunkHolder.Unloaded>>> fullChunkConverter, List<Chunk> chunks, Chunk chunk)
 	{
-		fillBelowZeroWithStone(chunk, chunkRegion);
+		ChunkGenBase.fillBelowZeroWith(Blocks.STONE, chunk, chunkRegion);
 
 		this.mazeGenerator.generateMaze(new MazeComponent.Vec2i(chunk.getPos().getStartPos()), chunkRegion, this::newMaze, this::decorateCell);
 		return CompletableFuture.completedFuture(chunk);

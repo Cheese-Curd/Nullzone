@@ -11,12 +11,15 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.ChunkRegion;
+import net.minecraft.world.chunk.Chunk;
 
 import java.util.Optional;
 
 public class ChunkGenBase
 {
-	public static String getCellDir(MazeComponent.CellState state, MazeComponent.Vec2i mazePos, MazeComponent maze) {
+	// (Kinda) stole this from LudoCrypt
+	// https://github.com/LudoCrypt/The-Corners/blob/cb8d030ce315d7cac4207dfd5b2ce0fee89b6a7c/src/main/java/net/ludocrypt/corners/world/chunk/CommunalCorridorsChunkGenerator.java#L434
+	public static String getCellDir(MazeComponent.CellState state) {
 		StringBuilder dir = new StringBuilder();
 
 		if (state.goesLeft())  dir.append('n');
@@ -25,6 +28,24 @@ public class ChunkGenBase
 		if (state.goesDown())  dir.append('w');
 
 		return dir.toString();
+	}
+
+	public static void fillBelowZeroWith(Block block, Chunk chunk, ChunkRegion region) {
+		int minY = region.getBottomY();
+		int maxY = 0;
+
+		BlockState bedrock = Blocks.BEDROCK.getDefaultState();
+
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+
+				chunk.setBlockState(new BlockPos(x, minY, z), bedrock, false);
+
+				for (int y = minY + 1; y < maxY; y++) {
+					chunk.setBlockState(new BlockPos(x, y, z), block.getDefaultState(), false);
+				}
+			}
+		}
 	}
 
 	public static void getAllPieces(NbtGroup.Builder builder)
