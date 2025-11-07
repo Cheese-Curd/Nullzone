@@ -1,7 +1,6 @@
 {
   "variants": {
-    "": {
-      "model": "nullzone:block/wallpaper"
-    }
+    "cut=false": { "model": "nullzone:block/wallpaper" },
+    "cut=true": { "model": "nullzone:block/cut_wallpaper" }
   }
 }
