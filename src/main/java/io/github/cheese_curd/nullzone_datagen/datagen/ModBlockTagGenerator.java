@@ -23,7 +23,13 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
 
 				.add(ModBlocks.CONCRETE_WALL_TOP)
 				.add(ModBlocks.CONCRETE_WALL)
-				.add(ModBlocks.CONCRETE_WALL_BOTTOM);
+				.add(ModBlocks.CONCRETE_WALL_BOTTOM)
+
+				.add(ModBlocks.CUT_WALLPAPER_TOP)
+				.add(ModBlocks.CUT_WALLPAPER)
+				.add(ModBlocks.WALLPAPER_TOP)
+				.add(ModBlocks.WALLPAPER)
+				.add(ModBlocks.WALLPAPER_BOTTOM);
 
 //			.add(ModBlocks.CONCRETE_WALL_STAIRS);
 
@@ -34,7 +40,13 @@ public class ModBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
 
 				.add(ModBlocks.CONCRETE_WALL_TOP)
 				.add(ModBlocks.CONCRETE_WALL)
-				.add(ModBlocks.CONCRETE_WALL_BOTTOM);
+				.add(ModBlocks.CONCRETE_WALL_BOTTOM)
+
+				.add(ModBlocks.CUT_WALLPAPER_TOP)
+				.add(ModBlocks.CUT_WALLPAPER)
+				.add(ModBlocks.WALLPAPER_TOP)
+				.add(ModBlocks.WALLPAPER)
+				.add(ModBlocks.WALLPAPER_BOTTOM);
 
 //			.add(ModBlocks.CONCRETE_WALL_STAIRS);
 	}

@@ -70,6 +70,9 @@ public class ModBlocks
 	public static final Block OFFICE_WALL        = makeBlock(new Block(OFFICE_WALL_SETTINGS));
 	public static final Block OFFICE_WALL_BOTTOM = new Block(OFFICE_WALL_SETTINGS);
 
+	public static final Block CUT_WALLPAPER_TOP    = new Block(FabricBlockSettings.copyOf(Blocks.BRICKS));
+	public static final Block CUT_WALLPAPER        = makeBlock(new Block(FabricBlockSettings.copyOf(Blocks.BRICKS)));
+
 	public static final Block WALLPAPER_TOP    = new Block(OFFICE_WALL_SETTINGS);
 	public static final Block WALLPAPER        = makeBlock(new Block(OFFICE_WALL_SETTINGS));
 	public static final Block WALLPAPER_BOTTOM = new Block(OFFICE_WALL_SETTINGS);
@@ -84,7 +87,9 @@ public class ModBlocks
         MOD_BLOCKS_TB_MODELS.add(OFFICE_WALL_TOP);
         MOD_BLOCKS_TB_MODELS.add(OFFICE_WALL_BOTTOM);
 
-        MOD_BLOCKS_TB_MODELS.add(WALLPAPER_TOP);
+        MOD_BLOCKS_TB_MODELS.add(CUT_WALLPAPER_TOP);
+
+		MOD_BLOCKS_TB_MODELS.add(WALLPAPER_TOP);
         MOD_BLOCKS_TB_MODELS.add(WALLPAPER_BOTTOM);
 
 		registerBlock("ceiling_tile", CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
@@ -102,6 +107,9 @@ public class ModBlocks
 		registerBlock("office_wall_top",    OFFICE_WALL_TOP, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock("office_wall",        OFFICE_WALL, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock("office_wall_bottom", OFFICE_WALL_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
+
+		registerBlock("cut_wallpaper_top",    CUT_WALLPAPER_TOP, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock("cut_wallpaper",        CUT_WALLPAPER, Nullzone.ITEM_NO_SETTINGS);
 
 		registerBlock("wallpaper_top",    WALLPAPER_TOP, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock("wallpaper",        WALLPAPER, Nullzone.ITEM_NO_SETTINGS);

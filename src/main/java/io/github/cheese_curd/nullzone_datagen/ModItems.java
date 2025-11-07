@@ -22,10 +22,10 @@ public class ModItems
 		return item;
 	}
 
-	public static final Item EXAMPLE_ITEM = makeItem(Nullzone.ITEM_NO_SETTINGS, true);
+	public static final Item WALL_PAPER = makeItem(Nullzone.ITEM_NO_SETTINGS, true);
 
 	public static void register()
 	{
-		Registry.register(Registries.ITEM, new Identifier(Nullzone.MOD_ID, "example_item"), EXAMPLE_ITEM);
+		Registry.register(Registries.ITEM, new Identifier(Nullzone.MOD_ID, "wall_paper"), WALL_PAPER);
 	}
 }
