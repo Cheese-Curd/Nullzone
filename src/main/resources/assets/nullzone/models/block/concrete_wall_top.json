@@ -3,6 +3,6 @@
   "textures": {
     "bottom": "nullzone:block/concrete_wall",
     "side": "nullzone:block/concrete_wall_top",
-    "top": "nullzone:block/concrete_wall_top-top"
+    "top": "nullzone:block/concrete_wall_tb"
   }
 }

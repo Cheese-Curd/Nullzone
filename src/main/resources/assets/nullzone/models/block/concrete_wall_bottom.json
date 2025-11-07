@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "bottom": "nullzone:block/concrete_wall_bottom-bottom",
+    "bottom": "nullzone:block/concrete_wall_tb",
     "side": "nullzone:block/concrete_wall_bottom",
     "top": "nullzone:block/concrete_wall"
   }
