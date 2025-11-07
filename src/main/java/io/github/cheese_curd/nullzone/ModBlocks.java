@@ -48,6 +48,7 @@ public class ModBlocks
 
 	public static final Block CEILING_TILE = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
 
+	public static final Block CONCRETE_BRICKS            = makeBlock(CONCRETE_SETTINGS);
 	public static final Block CONCRETE_FLOOR             = makeBlock(CONCRETE_SETTINGS);
 	public static final Block DIRTY_CONCRETE_FLOOR       = makeBlock(CONCRETE_SETTINGS);
 	public static final Block CONCRETE_WALL              = makeBlock(CONCRETE_SETTINGS);
@@ -79,6 +80,7 @@ public class ModBlocks
 	{
 		registerBlock(mod, "ceiling_tile", CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
 
+		registerBlock(mod, "concrete_bricks",      CONCRETE_BRICKS, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "concrete_floor",       CONCRETE_FLOOR, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "dirty_concrete_floor", DIRTY_CONCRETE_FLOOR, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "concrete_wall",        CONCRETE_WALL, Nullzone.ITEM_NO_SETTINGS);
