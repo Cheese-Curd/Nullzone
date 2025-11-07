@@ -31,10 +31,10 @@ public class Nullzone implements ModInitializer {
 		Registries.ITEM_GROUP,
 		NULLZONE_GROUP_KEY.getValue(),
 		FabricItemGroup.builder()
-			.icon(() -> new ItemStack(ModItems.EXAMPLE_ITEM))
+			.icon(() -> new ItemStack(ModItems.WALL_PAPER))
 			.name(Text.translatable("itemGroup.nullzone.nullzone_group"))
 			.entries((context, entries) -> {
-				entries.addItem(ModItems.EXAMPLE_ITEM);
+				entries.addItem(ModItems.WALL_PAPER);
 			})
 			.build()
 	);
