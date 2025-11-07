@@ -2,6 +2,7 @@ package io.github.cheese_curd.nullzone.world.chunkgen;
 
 import io.github.cheese_curd.nullzone.ModBlocks;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
+import net.ludocrypt.limlib.api.world.NbtGroup;
 import net.ludocrypt.limlib.api.world.maze.MazeComponent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,6 +25,31 @@ public class ChunkGenBase
 		if (state.goesDown())  dir.append('w');
 
 		return dir.toString();
+	}
+
+	public static void getAllPieces(NbtGroup.Builder builder)
+	{
+		// Taken from LudoCrypt
+		// https://github.com/LudoCrypt/The-Corners/blob/cb8d030ce315d7cac4207dfd5b2ce0fee89b6a7c/src/main/java/net/ludocrypt/corners/world/chunk/CommunalCorridorsChunkGenerator.java#L91
+		for (int i = 0; i < 15; i++)
+		{
+			String dir = "nesw";
+			boolean north = ((i & 8) != 0);
+			boolean east = ((i & 4) != 0);
+			boolean south = ((i & 2) != 0);
+			boolean west = ((i & 1) != 0);
+
+			if (north)
+				dir = dir.replace("n", "");
+			if (east)
+				dir = dir.replace("e", "");
+			if (south)
+				dir = dir.replace("s", "");
+			if (west)
+				dir = dir.replace("w", "");
+
+			builder.with("maze/" + dir, dir);
+		}
 	}
 
 	public void modifyStructure(ChunkRegion region, BlockPos pos, BlockState state, Optional<NbtCompound> blockEntityNbt)
