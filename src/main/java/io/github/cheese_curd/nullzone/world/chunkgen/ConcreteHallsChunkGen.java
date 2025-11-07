@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.cheese_curd.nullzone.ModBlocks;
 import io.github.cheese_curd.nullzone.ModLimGen;
 import io.github.cheese_curd.nullzone.Nullzone;
+import io.github.cheese_curd.nullzone.world.maze.WholeMaze;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.Manipulation;
 import net.ludocrypt.limlib.api.world.NbtGroup;
@@ -29,6 +30,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.gen.RandomState;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
+import oshi.driver.mac.Who;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +52,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 		})).apply(instance, instance.stable(ConcreteHallsChunkGen::new));
 	});
 
-	MazeGenerator<MazeComponent> mazeGenerator;
+	WholeMaze mazeGenerator;
 	ChunkGenBase chunkGenBase;
 
 	public static NbtGroup createGroup() {
@@ -87,8 +89,8 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 
 	public ConcreteHallsChunkGen(BiomeSource biomeSource, int width, int height, int padding) {
 		super(biomeSource, createGroup());
-		this.mazeGenerator = new MazeGenerator<MazeComponent>(width, height, padding + width, padding + width, 0);
-		this.chunkGenBase = new ChunkGenBase();
+		this.mazeGenerator = new WholeMaze(width, height, padding + width, padding + width, 0, 2);
+		this.chunkGenBase  = new ChunkGenBase();
 	}
 
 	@Override
