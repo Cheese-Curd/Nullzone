@@ -1,16 +1,20 @@
 {
   "itemGroup.nullzone.nullzone_group": "The Nullzone",
 
+  "item.nullzone.wall_paper": "Wall Paper",
+
   "block.nullzone.ceiling_tile": "Ceiling Tile",
   "block.nullzone.wet_ceiling_tile": "Wet Ceiling Tile",
 
   "block.nullzone.ceiling_light": "Ceiling Light",
 
+  "block.nullzone.cut_wallpaper_top": "Cut Wallpaper Top",
+  "block.nullzone.cut_wallpaper": "Cut Wallpaper",
+
   "block.nullzone.wallpaper_top": "Wallpaper Top",
   "block.nullzone.wallpaper": "Wallpaper",
   "block.nullzone.wallpaper_bottom": "Wallpaper Bottom",
 
-  "block.nullzone.stripped_wallpaper": "Stripped Wallpaper",
   "block.nullzone.office_carpet": "Office Carpet",
 
   "block.nullzone.concrete_bricks": "Concrete Bricks",
