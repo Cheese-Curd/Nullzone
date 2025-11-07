@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -29,6 +30,12 @@ public class CuttableBlock extends NullzoneBlock
 			.with(CUT, false));
 
 		this.droppedItem = droppedItem;
+	}
+
+	@Override
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+		super.appendProperties(builder);
+		builder.add(CUT);
 	}
 
 	@Override
