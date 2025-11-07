@@ -73,7 +73,7 @@ public class ModBlocks
 	public static final Block WALLPAPER        = makeBlock(new Block(OFFICE_WALL_SETTINGS));
 	public static final Block WALLPAPER_BOTTOM = new Block(OFFICE_WALL_SETTINGS);
 
-	public static final Block OFFICE_CARPET = makeBlock(new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
+//	public static final Block OFFICE_CARPET = makeBlock(new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
 
 	public static void register()
 	{
@@ -105,7 +105,7 @@ public class ModBlocks
 		registerBlock("wallpaper",        WALLPAPER, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock("wallpaper_bottom", WALLPAPER_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
 
-		registerBlock("office_carpet", OFFICE_CARPET, Nullzone.ITEM_NO_SETTINGS);
+//		registerBlock("office_carpet", OFFICE_CARPET, Nullzone.ITEM_NO_SETTINGS);
 
 		// Concrete Stairs
 //		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "concrete_wall_stairs"), CONCRETE_WALL_STAIRS);
