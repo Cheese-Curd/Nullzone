@@ -30,17 +30,17 @@ public class ModLimGen implements LimlibRegistrar
 		new LimlibWorld(
 			() -> new DimensionType(
 				OptionalLong.empty(),
-				false,
 				true,
 				false,
 				false,
+				true,
 				1.0,
 				true,
 				false,
 				-32, 144, 144,
 				BlockTags.INFINIBURN_OVERWORLD,
 				DimensionTypes.OVERWORLD_ID,
-				1,
+				0,
 				new DimensionType.MonsterSettings(
 					false,
 					false,

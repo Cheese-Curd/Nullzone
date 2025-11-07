@@ -2,6 +2,7 @@ package io.github.cheese_curd.nullzone.world.chunkgen;
 
 import io.github.cheese_curd.nullzone.ModBlocks;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
+import net.ludocrypt.limlib.api.world.maze.MazeComponent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,6 +15,17 @@ import java.util.Optional;
 
 public class ChunkGenBase
 {
+	public static String getCellDir(MazeComponent.CellState state, MazeComponent.Vec2i mazePos, MazeComponent maze) {
+		StringBuilder dir = new StringBuilder();
+
+		if (state.goesLeft())  dir.append('n');
+		if (state.goesUp())    dir.append('e');
+		if (state.goesRight()) dir.append('s');
+		if (state.goesDown())  dir.append('w');
+
+		return dir.toString();
+	}
+
 	public void modifyStructure(ChunkRegion region, BlockPos pos, BlockState state, Optional<NbtCompound> blockEntityNbt)
 	{
 		if (state.isOf(Blocks.STRUCTURE_BLOCK))

@@ -121,6 +121,11 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 
 		maze.generateMaze();
 
+		maze.cellState(0, maze.height / 2).down(true);
+		maze.cellState(maze.width - 1, maze.height / 2).up(true);
+		maze.cellState(maze.width / 2, maze.height - 1).right(true);
+		maze.cellState(maze.width / 2, 0).left(true);
+
 		return maze;
 	}
 
@@ -135,16 +140,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 
 			// Stole this from LudoCrypt
 			// https://github.com/LudoCrypt/The-Corners/blob/cb8d030ce315d7cac4207dfd5b2ce0fee89b6a7c/src/main/java/net/ludocrypt/corners/world/chunk/CommunalCorridorsChunkGenerator.java#L434
-			String dir = "nesw";
-
-			if (!state.goesLeft())
-				dir = dir.replace("n", "");
-			if (!state.goesUp())
-				dir = dir.replace("e", "");
-			if (!state.goesRight())
-				dir = dir.replace("s", "");
-			if (!state.goesDown())
-				dir = dir.replace("w", "");
+			String dir = ChunkGenBase.getCellDir(state, mazePos, maze);
 
 			BlockPos blockPos = pos.toBlock();
 
@@ -162,10 +158,10 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 			else
 				Nullzone.LOGGER.info("NO DIRECTION!!");
 
-//			if (random.nextDouble() <= 0.25)
-//				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
-//			else
-//				generateNbt(region, blockPos, nbtGroup.nbtId("base", "base"));
+			if (random.nextDouble() <= 0.25)
+				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
+			else
+				generateNbt(region, blockPos, nbtGroup.nbtId("base", "base"));
 		}
 	}
 
