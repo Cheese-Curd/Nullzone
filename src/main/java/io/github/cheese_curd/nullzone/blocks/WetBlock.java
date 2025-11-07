@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 
-public class WetBlock extends Block {
+public class WetBlock extends NullzoneBlock {
 	float dripPercentage;
 
 	public WetBlock(Settings settings, float dripPercentage) {
