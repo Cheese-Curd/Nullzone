@@ -1,8 +1,8 @@
 package io.github.cheese_curd.nullzone;
 
 import com.mojang.serialization.Lifecycle;
-import io.github.cheese_curd.nullzone.world.biomes.ConcreteHallsBiome;
-import io.github.cheese_curd.nullzone.world.chunkgen.ConcreteHallsChunkGen;
+import io.github.cheese_curd.nullzone.world.biomes.*;
+import io.github.cheese_curd.nullzone.world.chunkgen.*;
 import net.ludocrypt.limlib.api.LimlibRegistrar;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks;
 import net.ludocrypt.limlib.api.LimlibWorld;
@@ -12,7 +12,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.int_provider.ConstantIntProvider;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.source.FixedBiomeSource;
 import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionType;
@@ -24,61 +23,76 @@ import java.util.OptionalLong;
 
 public class ModLimGen implements LimlibRegistrar
 {
-	public static final Identifier CONCRETE_HALLS_ID = new Identifier(Nullzone.MOD_ID, "concrete_halls");
+	public static final Identifier CONCRETE_HALLS_ID    = new Identifier(Nullzone.MOD_ID, "concrete_halls");
+	public static final Identifier ABANDONED_OFFICES_ID = new Identifier(Nullzone.MOD_ID, "abandoned_offices");
 
-	public static final LimlibWorld CONCRETE_HALLS =
-		new LimlibWorld(
-			() -> new DimensionType(
-				OptionalLong.empty(),
-				true,
-				false,
-				false,
-				true,
-				1.0,
-				true,
-				false,
-				-32, 144, 144,
-				BlockTags.INFINIBURN_OVERWORLD,
-				DimensionTypes.OVERWORLD_ID,
-				0,
-				new DimensionType.MonsterSettings(
-					false,
-					false,
-					ConstantIntProvider.create(0),
-					0
-				)
-			),
-			(registry) ->
-				new DimensionOptions(
-					registry.get(RegistryKeys.DIMENSION_TYPE)
-						.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, CONCRETE_HALLS_ID))
-						.get(),
-					new ConcreteHallsChunkGen(
-						new FixedBiomeSource(registry
-							.get(RegistryKeys.BIOME)
-							.getHolder(NullBiomes.CONCRETE_HALLS_BIOME)
-							.get()), 6, 6, 0
-					)
-				)
+	static final DimensionType genericDimType()
+	{
+		return new DimensionType(
+			OptionalLong.empty(),
+			true,
+			false,
+			false,
+			true,
+			1.0,
+			true,
+			false,
+			-32, 144, 144,
+			BlockTags.INFINIBURN_OVERWORLD,
+			DimensionTypes.OVERWORLD_ID,
+			0,
+			new DimensionType.MonsterSettings(false, false, ConstantIntProvider.create(0), 0)
 		);
+	}
 
+	public static final LimlibWorld CONCRETE_HALLS = new LimlibWorld(
+		ModLimGen::genericDimType,
+		(registry) -> new DimensionOptions(
+			registry.get(RegistryKeys.DIMENSION_TYPE)
+				.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, CONCRETE_HALLS_ID))
+				.get(),
+			new ConcreteHallsChunkGen(
+				new FixedBiomeSource(registry.get(RegistryKeys.BIOME)
+					.getHolder(NullBiomes.CONCRETE_HALLS_BIOME).get()), 6, 6, 0
+			)
+		)
+	);
 
-	public static final RegistryKey<World> CONCRETE_HALLS_KEY = RegistryKey.of(RegistryKeys.WORLD, CONCRETE_HALLS_ID);
+	public static final LimlibWorld ABANDONED_OFFICES = new LimlibWorld(
+		ModLimGen::genericDimType,
+		(registry) -> new DimensionOptions(
+			registry.get(RegistryKeys.DIMENSION_TYPE)
+				.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, ABANDONED_OFFICES_ID))
+				.get(),
+			new AbandonedOfficesChunkGen(
+				new FixedBiomeSource(registry.get(RegistryKeys.BIOME)
+					.getHolder(NullBiomes.ABANDONED_OFFICES_BIOME).get()), 6, 6, 0
+			)
+		)
+	);
 
 	@Override
 	public void registerHooks()
 	{
+		LimlibRegistryHooks.hook(RegistryKeys.BIOME, (infoLookup, registryKey, registry) -> {
+			HolderProvider<PlacedFeature> features = infoLookup.lookup(RegistryKeys.PLACED_FEATURE).get().getter();
+			HolderProvider<ConfiguredCarver<?>> carvers = infoLookup.lookup(RegistryKeys.CONFIGURED_CARVER).get().getter();
+
+			registry.register(NullBiomes.CONCRETE_HALLS_BIOME, ConcreteHallsBiome.create(features, carvers), Lifecycle.stable());
+			registry.register(NullBiomes.ABANDONED_OFFICES_BIOME, AbandonedOfficesBiome.create(features, carvers), Lifecycle.stable());
+		});
+
+		// Register the LimlibWorlds statically
 		LimlibWorld.LIMLIB_WORLD.register(
 			RegistryKey.of(LimlibWorld.LIMLIB_WORLD_KEY, CONCRETE_HALLS_ID),
 			CONCRETE_HALLS,
 			Lifecycle.stable()
 		);
 
-		LimlibRegistryHooks.hook(RegistryKeys.BIOME, ((infoLookup, registryKey, registry) -> {
-			HolderProvider<PlacedFeature> features = infoLookup.lookup(RegistryKeys.PLACED_FEATURE).get().getter();
-			HolderProvider<ConfiguredCarver<?>> carvers = infoLookup.lookup(RegistryKeys.CONFIGURED_CARVER).get().getter();
-
-			registry.register(NullBiomes.CONCRETE_HALLS_BIOME, ConcreteHallsBiome.create(features, carvers), Lifecycle.stable());
-		}));
+		LimlibWorld.LIMLIB_WORLD.register(
+			RegistryKey.of(LimlibWorld.LIMLIB_WORLD_KEY, ABANDONED_OFFICES_ID),
+			ABANDONED_OFFICES,
+			Lifecycle.stable()
+		);
 	}
 }
