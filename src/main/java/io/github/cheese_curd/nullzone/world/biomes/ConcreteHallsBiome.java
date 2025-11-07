@@ -1,10 +1,6 @@
 package io.github.cheese_curd.nullzone.world.biomes;
 
-import io.github.cheese_curd.nullzone.Nullzone;
 import net.minecraft.registry.HolderProvider;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.GenerationSettings;
