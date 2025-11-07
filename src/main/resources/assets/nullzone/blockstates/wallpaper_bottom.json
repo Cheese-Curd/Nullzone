@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nullzone:block/office_wall_bottom"
+      "model": "nullzone:block/wallpaper_bottom"
     }
   }
 }

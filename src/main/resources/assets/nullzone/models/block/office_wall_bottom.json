@@ -1,12 +1,8 @@
 {
-  "parent": "minecraft:block/cube",
-    "textures": {
-      "up": "nullzone:block/office_wall",
-      "down": "nullzone:block/office_wall_bottom2",
-      "north": "nullzone:block/office_wall_bottom",
-      "south": "nullzone:block/office_wall_bottom",
-      "west": "nullzone:block/office_wall_bottom",
-      "east": "nullzone:block/office_wall_bottom",
-      "particle": "nullzone:block/office_wall_bottom"
-    }
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "nullzone:block/office_wall_bottom-bottom",
+    "side": "nullzone:block/office_wall_bottom",
+    "top": "nullzone:block/office_wall"
+  }
 }
