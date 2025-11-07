@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -18,14 +19,16 @@ import net.minecraft.world.World;
 
 public class CuttableBlock extends NullzoneBlock
 {
-	private final Item  droppedItem;
-	private final Block cutBlock;
+	public static final BooleanProperty CUT = BooleanProperty.of("cut");
 
-	public CuttableBlock(Settings settings, Item droppedItem, Block cutBlock) {
+	private final Item  droppedItem;
+	public CuttableBlock(Settings settings, Item droppedItem) {
 		super(settings);
 
+		setDefaultState(getStateManager().getDefaultState()
+			.with(CUT, false));
+
 		this.droppedItem = droppedItem;
-		this.cutBlock = cutBlock;
 	}
 
 	@Override
@@ -38,7 +41,7 @@ public class CuttableBlock extends NullzoneBlock
 			{
 				world.playSound(null, pos, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.BLOCKS, 1, 1);
 				world.addBlockBreakParticles(pos, state);
-				world.setBlockState(pos, cutBlock.getDefaultState());
+				world.setBlockState(pos, this.getDefaultState().with(CUT, true));
 				Block.dropStack(world, pos, new ItemStack(droppedItem));
 
 				held.damage(2, player, p -> p.sendToolBreakStatus(hand));
