@@ -34,6 +34,8 @@ public class ModBlocks
 
 		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), id), block);
 		Registry.register(Registries.ITEM,  new Identifier(mod.metadata().id(), id), _ITEM);
+
+		Nullzone.LOGGER.info("Registered Block+BlockItem ({}:{})", mod.metadata().id(), id);
 	}
 
 	static QuiltBlockSettings CONCRETE_SETTINGS = QuiltBlockSettings.create()
