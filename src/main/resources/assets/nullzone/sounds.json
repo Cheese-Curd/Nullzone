@@ -1,0 +1,8 @@
+{
+  "light_buzz": {
+    "subtitle": "sounds.nullzone.light_buzz",
+    "sounds": [
+      "nullzone:light_hum"
+    ]
+  }
+}

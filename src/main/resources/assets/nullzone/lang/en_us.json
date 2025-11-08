@@ -27,5 +27,7 @@
   "block.nullzone.ceiling": "Ceiling",
   "block.nullzone.wet_ceiling": "Wet Ceiling",
 
-  "block.nullzone.subflooring": "Subflooring"
+  "block.nullzone.subflooring": "Subflooring",
+
+  "sounds.nullzone.light_buzz": "Fluorescent Light Hum-Buzz"
 }
