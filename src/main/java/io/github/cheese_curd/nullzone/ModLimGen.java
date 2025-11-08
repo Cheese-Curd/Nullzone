@@ -33,7 +33,7 @@ public class ModLimGen implements LimlibRegistrar
 			true,
 			false,
 			false,
-			true,
+			false,
 			1.0,
 			true,
 			false,
