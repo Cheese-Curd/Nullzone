@@ -1,6 +1,7 @@
 package io.github.cheese_curd.nullzone.world.chunkgen;
 
 import io.github.cheese_curd.nullzone.ModBlocks;
+import io.github.cheese_curd.nullzone.Nullzone;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.NbtGroup;
 import net.ludocrypt.limlib.api.world.maze.MazeComponent;
@@ -30,6 +31,14 @@ public class ChunkGenBase
 		return dir.toString();
 	}
 
+	public static void connectMazes(MazeComponent maze)
+	{
+		maze.cellState(0, maze.height / 2).down(true);
+		maze.cellState(maze.width - 1, maze.height / 2).up(true);
+		maze.cellState(maze.width / 2, maze.height - 1).right(true);
+		maze.cellState(maze.width / 2, 0).left(true);
+	}
+
 	public static void fillBelowZeroWith(Block block, Chunk chunk, ChunkRegion region) {
 		int minY = region.getBottomY();
 		int maxY = 0;
@@ -42,6 +51,19 @@ public class ChunkGenBase
 				chunk.setBlockState(new BlockPos(x, minY, z), bedrock, false);
 
 				for (int y = minY + 1; y < maxY; y++) {
+					chunk.setBlockState(new BlockPos(x, y, z), block.getDefaultState(), false);
+				}
+			}
+		}
+	}
+
+	public static void fillAboveYWith(int minY, Block block, Chunk chunk, ChunkRegion region)
+	{
+		int maxY = region.getTopY();
+
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				for (int y = minY + 1; y <= maxY; y++) {
 					chunk.setBlockState(new BlockPos(x, y, z), block.getDefaultState(), false);
 				}
 			}
@@ -83,10 +105,11 @@ public class ChunkGenBase
 			if (state.goesDown())  dir.append('w');
 			 */
 
-			builder.with("maze/" + dir, dir);
-			builder.with("maze/" + dir, dir);
-			builder.with("maze/" + dir, dir);
-			builder.with("maze/" + dir, dir);
+//			builder.with("maze/" + dir, dir);
+//			builder.with("maze/" + dir, dir);
+//			builder.with("maze/" + dir, dir);
+//			builder.with("maze/" + dir, dir);
+			Nullzone.LOGGER.warn("all15 == false is unfinished!!");
 		}
 	}
 

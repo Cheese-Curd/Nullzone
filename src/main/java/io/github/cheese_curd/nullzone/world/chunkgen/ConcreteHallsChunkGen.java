@@ -82,10 +82,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 
 		maze.generateMaze();
 
-		maze.cellState(0, maze.height / 2).down(true);
-		maze.cellState(maze.width - 1, maze.height / 2).up(true);
-		maze.cellState(maze.width / 2, maze.height - 1).right(true);
-		maze.cellState(maze.width / 2, 0).left(true);
+		ChunkGenBase.connectMazes(maze);
 
 		return maze;
 	}
@@ -134,6 +131,9 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 		ChunkGenBase.fillBelowZeroWith(Blocks.STONE, chunk, chunkRegion);
 
 		this.mazeGenerator.generateMaze(new MazeComponent.Vec2i(chunk.getPos().getStartPos()), chunkRegion, this::newMaze, this::decorateCell);
+
+		ChunkGenBase.fillAboveYWith(6, Blocks.STONE, chunk, chunkRegion);
+
 		return CompletableFuture.completedFuture(chunk);
 	}
 
