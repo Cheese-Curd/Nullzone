@@ -58,6 +58,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 		NbtGroup.Builder builder = NbtGroup.Builder
 			.create(ModLimGen.ABANDONED_OFFICES_ID)
 //			.with("decoration", 1, 4)
+			.with("single", "single")
 			.with("base", "base")
 			.with("base_dark", "base_dark");
 
