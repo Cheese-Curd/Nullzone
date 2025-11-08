@@ -44,6 +44,8 @@ public class Nullzone implements ModInitializer {
     {
         LOGGER.info("{} Initializing...", mod.metadata().name());
 
+		ModSounds.registerSounds();
+
 	    ModItems.register(mod);
 	    ModBlocks.register(mod);
 		NullBiomes.init();
