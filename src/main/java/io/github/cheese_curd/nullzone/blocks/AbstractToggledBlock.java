@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 
+@Deprecated(forRemoval = true, since = "A0.2")
 public abstract class AbstractToggledBlock extends NullzoneBlock {
 	public static final BooleanProperty ON = BooleanProperty.of("on");
 	public static final BooleanProperty POWERED = BooleanProperty.of("powered");

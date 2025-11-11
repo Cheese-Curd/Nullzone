@@ -1,12 +1,12 @@
 package io.github.cheese_curd.nullzone;
 
 import io.github.cheese_curd.nullzone.blocks.*;
+import io.github.cheese_curd.nullzone.blocks.CeilingLight;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
@@ -59,6 +59,7 @@ public class ModBlocks
 	public static final Block CEILING = makeBlock(CONCRETE_SETTINGS);
 
 	public static final ToggleLight CEILING_LIGHT = new ToggleLight(QuiltBlockSettings.copyOf(Blocks.GLOWSTONE), 15, 0);
+//	public static final CeilingLight CEILING_LIGHT = new CeilingLight(QuiltBlockSettings.copyOf(Blocks.GLOWSTONE));
 
 	public static final SubflooringBlock SUBFLOORING = new SubflooringBlock(QuiltBlockSettings.copyOf(Blocks.OAK_PLANKS));
 
