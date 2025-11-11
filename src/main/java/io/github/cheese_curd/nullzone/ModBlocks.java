@@ -75,7 +75,7 @@ public class ModBlocks
 	public static final Block WALLPAPER        = new CuttableBlock(QuiltBlockSettings.copyOf(Blocks.BRICKS), ModItems.WALL_PAPER);
 	public static final Block WALLPAPER_BOTTOM = makeBlock(QuiltBlockSettings.copyOf(Blocks.BRICKS));
 
-	public static final Block OFFICE_CARPET = new RotatableBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
+	public static final Block OFFICE_CARPET = new WetRotatableBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
 
 	public static void register(ModContainer mod)
 	{
