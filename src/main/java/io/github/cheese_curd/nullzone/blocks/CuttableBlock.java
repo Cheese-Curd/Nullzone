@@ -38,11 +38,22 @@ public class CuttableBlock extends NullzoneBlock
 		builder.add(CUT);
 	}
 
+	boolean isHoldingShears(PlayerEntity player)
+	{
+		ItemStack main = player.getMainHandStack();
+		ItemStack off = player.getOffHandStack();
+
+		return (main.getItem() == Items.SHEARS)
+			|| (off.getItem() == Items.SHEARS);
+	}
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		if (state.get(CUT)) return ActionResult.PASS;
+
 		ItemStack held = player.getEquippedStack(EquipmentSlot.MAINHAND);
 
-		if (held.isOf(Items.SHEARS))
+		if (isHoldingShears(player))
 		{
 			if (!world.isClient())
 			{
@@ -59,4 +70,6 @@ public class CuttableBlock extends NullzoneBlock
 
 		return ActionResult.PASS;
 	}
+
+
 }
