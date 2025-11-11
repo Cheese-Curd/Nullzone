@@ -8,11 +8,13 @@ import net.ludocrypt.limlib.api.LimlibRegistryHooks;
 import net.ludocrypt.limlib.api.LimlibWorld;
 import net.ludocrypt.limlib.api.effects.sound.SoundEffects;
 import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffect;
+import net.minecraft.registry.Holder;
 import net.minecraft.registry.HolderProvider;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.MusicSound;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.int_provider.ConstantIntProvider;
 import net.minecraft.world.biome.source.FixedBiomeSource;
@@ -76,18 +78,18 @@ public class ModLimGen implements LimlibRegistrar
 	);
 
 	// Effects 'n Such
-	public static final SoundEffects CH_SOUNDS = new SoundEffects(
-		Optional.of(
-			new StaticReverbEffect.Builder()
-				.setDecayTime(2f)
-				.build()
-		),
-		Optional.empty(),
-		Optional.of(new MusicSound(ModSounds.LIGHT_BUZZ,
-			2000,
-			20000,
-			true))
-	);
+//	public static final SoundEffects CH_SOUNDS = new SoundEffects(
+//		Optional.of(
+//			new StaticReverbEffect.Builder()
+//				.setDecayTime(2f)
+//				.build()
+//		),
+//		Optional.empty(),
+//		Optional.of(new MusicSound((Holder<SoundEvent>) ModSounds.LIGHT_BUZZ,
+//			2000,
+//			20000,
+//			true))
+//	);
 
 
 	@Override
@@ -114,6 +116,6 @@ public class ModLimGen implements LimlibRegistrar
 		);
 
 		// Effects 'n Such
-		LimlibRegistryHooks.hook();
+//		LimlibRegistryHooks.hook();
 	}
 }
