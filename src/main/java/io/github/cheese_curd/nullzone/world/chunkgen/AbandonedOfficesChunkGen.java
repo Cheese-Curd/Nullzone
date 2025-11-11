@@ -8,6 +8,7 @@ import io.github.cheese_curd.nullzone.ModBlocks;
 import io.github.cheese_curd.nullzone.ModLimGen;
 import io.github.cheese_curd.nullzone.Nullzone;
 import io.github.cheese_curd.nullzone.blocks.RotatableBlock;
+import io.github.cheese_curd.nullzone.blocks.WetRotatableBlock;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.Manipulation;
 import net.ludocrypt.limlib.api.world.NbtGroup;
@@ -28,6 +29,7 @@ import net.minecraft.structure.StructureTemplateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -44,8 +46,6 @@ import java.util.function.Function;
 
 public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 {
-	static boolean isWet;
-
 	public static final Codec<AbandonedOfficesChunkGen> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance.group(BiomeSource.CODEC.fieldOf("biome_source").stable().forGetter((chunkGenerator) -> {
 			return chunkGenerator.populationSource;
@@ -57,6 +57,11 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 			return chunkGenerator.mazeGenerator.thicknessX - chunkGenerator.mazeGenerator.width;
 		})).apply(instance, instance.stable(AbandonedOfficesChunkGen::new));
 	});
+
+//	boolean[][] wetCells;
+//	MazeComponent.Vec2i curMaze;
+
+	boolean isWet;
 
 	MazeGenerator<MazeComponent> mazeGenerator;
 	ChunkGenBase chunkGenBase;
@@ -91,10 +96,12 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 		maze.generateMaze();
 
-		maze.cellState(0, maze.height / 2).down(true);
-		maze.cellState(maze.width - 1, maze.height / 2).up(true);
-		maze.cellState(maze.width / 2, maze.height - 1).right(true);
-		maze.cellState(maze.width / 2, 0).left(true);
+//		wetCells = new boolean[width][height]; // empty cells
+
+//		maze.cellState(0, maze.height / 2).down(true);
+//		maze.cellState(maze.width - 1, maze.height / 2).up(true);
+//		maze.cellState(maze.width / 2, maze.height - 1).right(true);
+//		maze.cellState(maze.width / 2, 0).left(true);
 
 		return maze;
 	}
@@ -104,11 +111,15 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 		isWet = random.nextFloat() < 0.25;
 
+//		curMaze = pos;
+
 		// the normal random is REALLY predictable so
 		random = RandomGenerator.createLegacy(region.getSeed() + LimlibHelper.blockSeed(pos.toBlock()));
 
 		if (isWet && random.nextFloat() < 0.25)
 			isWet = random.nextBoolean();
+
+//		wetCells[mazePos.getX()][mazePos.getY()] = isWet;
 
 		if (piece.getFirst() != MazePiece.E) {
 			Identifier nbtFile;
@@ -172,6 +183,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 		RandomGenerator random = chunkGenBase.modifyStructure(region, pos, state, blockEntityNbt);
 
+//		if (wetCells[curMaze.getX()][curMaze.getY()])
 		if (isWet)
 		{
 			if (state.isOf(ModBlocks.CEILING_TILE))
@@ -180,12 +192,22 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 			if (state.isOf(ModBlocks.OFFICE_CARPET))
 			{
-//				if (random.nextDouble() > 0.15)
-//				{
-//					Direction dir = state.get(RotatableBlock.FACING);
-//
-//					region.setBlockState(pos, ModBlocks.OFFICE_CARPET.getDefaultState().with(RotatableBlock.FACING, dir))
-//				}
+				if (random.nextDouble() > 0.75)
+				{
+					BlockPos abovePos = pos.add(new Vec3i(0,1, 0));
+
+					if (region.getBlockState(abovePos).isOf(Blocks.AIR))
+					{
+						region.setBlockState(abovePos, ModBlocks.SUBFLOORING.getDefaultState(), 3);
+					}
+				}
+
+				if (random.nextDouble() > 0.15)
+				{
+					Direction dir = state.get(RotatableBlock.FACING);
+
+					region.setBlockState(pos, state.with(WetRotatableBlock.WET, true), 3);
+				}
 			}
 		}
 	}
