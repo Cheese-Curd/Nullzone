@@ -1,8 +1,13 @@
 {
   "variants": {
-    "facing=north": { "model": "nullzone:block/office_carpet" },
-    "facing=south": { "model": "nullzone:block/office_carpet", "y": 180 },
-    "facing=west":  { "model": "nullzone:block/office_carpet", "y": 270 },
-    "facing=east":  { "model": "nullzone:block/office_carpet", "y": 90 }
+    "wet=false,facing=north": { "model": "nullzone:block/dry_office_carpet" },
+    "wet=false,facing=south": { "model": "nullzone:block/dry_office_carpet", "y": 180 },
+    "wet=false,facing=west":  { "model": "nullzone:block/dry_office_carpet", "y": 270 },
+    "wet=false,facing=east":  { "model": "nullzone:block/dry_office_carpet", "y": 90 },
+
+    "wet=true,facing=north": { "model": "nullzone:block/wet_office_carpet" },
+    "wet=true,facing=south": { "model": "nullzone:block/wet_office_carpet", "y": 180 },
+    "wet=true,facing=west":  { "model": "nullzone:block/wet_office_carpet", "y": 270 },
+    "wet=true,facing=east":  { "model": "nullzone:block/wet_office_carpet", "y": 90 }
   }
 }
