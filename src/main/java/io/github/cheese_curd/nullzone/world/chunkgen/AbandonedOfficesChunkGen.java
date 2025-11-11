@@ -4,8 +4,10 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.cheese_curd.nullzone.ModBlocks;
 import io.github.cheese_curd.nullzone.ModLimGen;
 import io.github.cheese_curd.nullzone.Nullzone;
+import io.github.cheese_curd.nullzone.blocks.RotatableBlock;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.Manipulation;
 import net.ludocrypt.limlib.api.world.NbtGroup;
@@ -14,15 +16,18 @@ import net.ludocrypt.limlib.api.world.maze.DepthFirstMaze;
 import net.ludocrypt.limlib.api.world.maze.MazeComponent;
 import net.ludocrypt.limlib.api.world.maze.MazeGenerator;
 import net.ludocrypt.limlib.api.world.maze.MazePiece;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerLightingProvider;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Property;
 import net.minecraft.structure.StructureTemplateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -39,6 +44,8 @@ import java.util.function.Function;
 
 public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 {
+	static boolean isWet;
+
 	public static final Codec<AbandonedOfficesChunkGen> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance.group(BiomeSource.CODEC.fieldOf("biome_source").stable().forGetter((chunkGenerator) -> {
 			return chunkGenerator.populationSource;
@@ -95,8 +102,13 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 	public void decorateCell(ChunkRegion region, MazeComponent.Vec2i pos, MazeComponent.Vec2i mazePos, MazeComponent maze, MazeComponent.CellState state, MazeComponent.Vec2i thickness, RandomGenerator random) {
 		Pair<MazePiece, Manipulation> piece = MazePiece.getFromCell(state, random);
 
+		isWet = random.nextFloat() < 0.25;
+
 		// the normal random is REALLY predictable so
 		random = RandomGenerator.createLegacy(region.getSeed() + LimlibHelper.blockSeed(pos.toBlock()));
+
+		if (isWet && random.nextFloat() < 0.25)
+			isWet = random.nextBoolean();
 
 		if (piece.getFirst() != MazePiece.E) {
 			Identifier nbtFile;
@@ -121,7 +133,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 //			else
 //				Nullzone.LOGGER.info("NO DIRECTION!!");
 
-			if (random.nextDouble() <= 0.25)
+			if (random.nextDouble() <= 0.25 || isWet)
 				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
 			else
 				generateNbt(region, blockPos, nbtGroup.nbtId("base", "base"));
@@ -158,6 +170,23 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 	protected void modifyStructure(ChunkRegion region, BlockPos pos, BlockState state, Optional<NbtCompound> blockEntityNbt) {
 		super.modifyStructure(region, pos, state, blockEntityNbt);
 
-		chunkGenBase.modifyStructure(region, pos, state, blockEntityNbt);
+		RandomGenerator random = chunkGenBase.modifyStructure(region, pos, state, blockEntityNbt);
+
+		if (isWet)
+		{
+			if (state.isOf(ModBlocks.CEILING_TILE))
+				if (random.nextDouble() < 0.2)
+					region.setBlockState(pos, ModBlocks.WET_CEILING_TILE.getDefaultState(), Block.NOTIFY_ALL, 1);
+
+			if (state.isOf(ModBlocks.OFFICE_CARPET))
+			{
+//				if (random.nextDouble() > 0.15)
+//				{
+//					Direction dir = state.get(RotatableBlock.FACING);
+//
+//					region.setBlockState(pos, ModBlocks.OFFICE_CARPET.getDefaultState().with(RotatableBlock.FACING, dir))
+//				}
+			}
+		}
 	}
 }

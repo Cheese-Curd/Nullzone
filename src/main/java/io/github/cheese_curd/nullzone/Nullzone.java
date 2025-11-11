@@ -7,12 +7,15 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
+import org.quiltmc.qsl.lifecycle.api.event.ServerTickEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,5 +52,13 @@ public class Nullzone implements ModInitializer {
 	    ModItems.register(mod);
 	    ModBlocks.register(mod);
 		NullBiomes.init();
+
+		ServerTickEvents.END.register((server) ->
+		{
+			ServerWorld world = server.getWorld(RegistryKey.of(RegistryKeys.WORLD, ModLimGen.ABANDONED_OFFICES_ID));
+			if (world != null)
+				if (!world.isRaining())
+					world.setWeather(0, Integer.MAX_VALUE, true, true);
+		});
     }
 }

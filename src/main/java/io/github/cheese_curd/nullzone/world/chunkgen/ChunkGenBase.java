@@ -113,7 +113,7 @@ public class ChunkGenBase
 		}
 	}
 
-	public void modifyStructure(ChunkRegion region, BlockPos pos, BlockState state, Optional<NbtCompound> blockEntityNbt)
+	public RandomGenerator modifyStructure(ChunkRegion region, BlockPos pos, BlockState state, Optional<NbtCompound> blockEntityNbt)
 	{
 		if (state.isOf(Blocks.STRUCTURE_BLOCK))
 			region.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL, 1);
@@ -132,5 +132,7 @@ public class ChunkGenBase
 				region.setBlockState(pos, Blocks.COBWEB.getDefaultState(), Block.NOTIFY_ALL, 1);
 			else
 				region.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL, 1);
+
+		return random;
 	}
 }
