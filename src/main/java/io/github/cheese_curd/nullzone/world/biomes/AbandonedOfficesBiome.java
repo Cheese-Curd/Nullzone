@@ -1,5 +1,6 @@
 package io.github.cheese_curd.nullzone.world.biomes;
 
+import io.github.cheese_curd.nullzone.ModSounds;
 import net.minecraft.registry.HolderProvider;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
@@ -21,14 +22,15 @@ public class AbandonedOfficesBiome
 			.fogColor(0xFFAC91)
 			.skyColor(0x808080)
 			.waterColor(0x7C96FF)
-			.waterFogColor(0x5466AD);
+			.waterFogColor(0x5466AD)
+			.loopSound(ModSounds.LIGHT_BUZZ);;
 
 		BiomeEffects effects = biomeEffects.build();
 
 		biome.effects(effects)
 			.hasPrecipitation(true)
 			.temperature(0.8F)
-			.downfall(1F)
+			.downfall(1.0F)
 			.spawnSettings(spawnSettings.build())
 			.generationSettings(generationSettings.build())
 			.effects(effects)

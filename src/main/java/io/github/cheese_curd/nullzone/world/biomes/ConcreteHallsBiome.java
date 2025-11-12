@@ -1,5 +1,6 @@
 package io.github.cheese_curd.nullzone.world.biomes;
 
+import io.github.cheese_curd.nullzone.ModSounds;
 import net.minecraft.registry.HolderProvider;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
@@ -21,7 +22,9 @@ public class ConcreteHallsBiome
 			.fogColor(0x262626)
 			.skyColor(0x808080)
 			.waterColor(0x8E3900)
-			.waterFogColor(0x8C532C);
+			.waterFogColor(0x8C532C)
+			.loopSound(ModSounds.LIGHT_BUZZ);
+//			.additionsSound();
 
 		BiomeEffects effects = biomeEffects.build();
 
