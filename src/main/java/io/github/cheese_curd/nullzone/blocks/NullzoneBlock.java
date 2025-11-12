@@ -23,9 +23,10 @@ public class NullzoneBlock extends Block
 
 	@Override
 	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (cannotBreak(player))
-		{
-			world.setBlockState(pos, state, 3);
+		if (cannotBreak(player)) {
+			if (!world.isClient) {
+				world.setBlockState(pos, state, Block.NOTIFY_ALL);
+			}
 			return;
 		}
 
