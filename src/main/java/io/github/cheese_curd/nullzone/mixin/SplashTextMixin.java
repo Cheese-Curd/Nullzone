@@ -32,7 +32,7 @@ public class SplashTextMixin
 		splashes.add("Please remain calm.");
 		splashes.add("Index §k-1§r out of bounds for length §k99§r");
 
-		Nullzone.LOGGER.info("Successfully added {} Splashes!", splashes.size() - oldSplashCount);
+		Nullzone.LOGGER.info("[NULLZONE] Successfully added {} Splashes!", splashes.size() - oldSplashCount);
 
 		cir.setReturnValue(splashes);
 	}
