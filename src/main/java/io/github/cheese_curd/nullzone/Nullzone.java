@@ -52,13 +52,5 @@ public class Nullzone implements ModInitializer {
 	    ModItems.register(mod);
 	    ModBlocks.register(mod);
 		NullBiomes.init();
-
-		ServerTickEvents.END.register((server) ->
-		{
-			ServerWorld world = server.getWorld(RegistryKey.of(RegistryKeys.WORLD, ModLimGen.ABANDONED_OFFICES_ID));
-			if (world != null)
-				if (!world.isRaining())
-					world.setWeather(0, Integer.MAX_VALUE, true, true);
-		});
     }
 }
