@@ -16,7 +16,8 @@
         },
         "intermediate_mappings": "net.fabricmc:intermediary",
         "entrypoints": {
-            "init": "io.github.cheese_curd.nullzone.Nullzone"
+            "init": "io.github.cheese_curd.nullzone.Nullzone",
+						"client_init": "io.github.cheese_curd.nullzone.NullzoneClient"
         },
         "depends": [
             {
