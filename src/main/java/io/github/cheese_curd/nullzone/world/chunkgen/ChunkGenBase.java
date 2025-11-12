@@ -32,6 +32,18 @@ public class ChunkGenBase
 		return dir.toString();
 	}
 
+	public static boolean canSeeSky(ChunkRegion region, BlockPos pos)
+	{
+		for (int y = 1; y < region.getTopY(); y++)
+		{
+			BlockState stateAbove = region.getBlockState(pos.up(y));
+			if (!stateAbove.isAir() || stateAbove.isOpaque())
+				return false;
+		}
+
+		return true;
+	}
+
 	public static void connectMazes(MazeComponent maze)
 	{
 		maze.cellState(0, maze.height / 2).down(true);
