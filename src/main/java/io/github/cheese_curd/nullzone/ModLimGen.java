@@ -6,25 +6,17 @@ import io.github.cheese_curd.nullzone.world.chunkgen.*;
 import net.ludocrypt.limlib.api.LimlibRegistrar;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks;
 import net.ludocrypt.limlib.api.LimlibWorld;
-import net.ludocrypt.limlib.api.effects.sound.SoundEffects;
-import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffect;
-import net.minecraft.registry.Holder;
-import net.minecraft.registry.HolderProvider;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.sound.MusicSound;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.int_provider.ConstantIntProvider;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.source.FixedBiomeSource;
 import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.dimension.DimensionTypes;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.feature.PlacedFeature;
 
-import java.util.Optional;
 import java.util.OptionalLong;
 
 public class ModLimGen implements LimlibRegistrar
@@ -32,27 +24,28 @@ public class ModLimGen implements LimlibRegistrar
 	public static final Identifier CONCRETE_HALLS_ID    = new Identifier(Nullzone.MOD_ID, "concrete_halls");
 	public static final Identifier ABANDONED_OFFICES_ID = new Identifier(Nullzone.MOD_ID, "abandoned_offices");
 
-	static final DimensionType genericDimType()
+	static DimensionType genericDimType(Identifier id)
 	{
 		return new DimensionType(
 			OptionalLong.empty(),
 			true,
 			false,
 			false,
-			false,
+			true, // This is annoying :(
 			1.0,
 			true,
 			false,
 			-32, 144, 144,
 			BlockTags.INFINIBURN_OVERWORLD,
-			DimensionTypes.OVERWORLD_ID,
+			id,
 			0,
 			new DimensionType.MonsterSettings(false, false, ConstantIntProvider.create(0), 0)
 		);
 	}
 
+	// LimlibWorld's
 	public static final LimlibWorld CONCRETE_HALLS = new LimlibWorld(
-		ModLimGen::genericDimType,
+		() -> genericDimType(CONCRETE_HALLS_ID),
 		(registry) -> new DimensionOptions(
 			registry.get(RegistryKeys.DIMENSION_TYPE)
 				.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, CONCRETE_HALLS_ID))
@@ -65,7 +58,7 @@ public class ModLimGen implements LimlibRegistrar
 	);
 
 	public static final LimlibWorld ABANDONED_OFFICES = new LimlibWorld(
-		ModLimGen::genericDimType,
+		() -> genericDimType(ABANDONED_OFFICES_ID),
 		(registry) -> new DimensionOptions(
 			registry.get(RegistryKeys.DIMENSION_TYPE)
 				.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, ABANDONED_OFFICES_ID))
@@ -77,6 +70,12 @@ public class ModLimGen implements LimlibRegistrar
 		)
 	);
 
+	// World Keys
+	public static final RegistryKey<World> CONCRETE_HALLS_KEY = RegistryKey
+		.of(RegistryKeys.WORLD, CONCRETE_HALLS_ID);
+	public static final RegistryKey<World> ABANDONED_OFFICES_KEY = RegistryKey
+		.of(RegistryKeys.WORLD, ABANDONED_OFFICES_ID);
+
 	// Effects 'n Such
 //	public static final SoundEffects CH_SOUNDS = new SoundEffects(
 //		Optional.of(
@@ -85,12 +84,11 @@ public class ModLimGen implements LimlibRegistrar
 //				.build()
 //		),
 //		Optional.empty(),
-//		Optional.of(new MusicSound((Holder<SoundEvent>) ModSounds.LIGHT_BUZZ,
+//		Optional.of(new MusicSound(ModSounds.LIGHT_BUZZ,
 //			2000,
 //			20000,
 //			true))
 //	);
-
 
 	@Override
 	public void registerHooks()
@@ -116,6 +114,10 @@ public class ModLimGen implements LimlibRegistrar
 		);
 
 		// Effects 'n Such
-//		LimlibRegistryHooks.hook();
+//		LimlibRegistryHooks.hook(SoundEffects.SOUND_EFFECTS_KEY,
+//			(infoLookup, registryKey, registry) -> registry.register(
+//				RegistryKey.of(SoundEffects.SOUND_EFFECTS_KEY, new Identifier("nullzone:ch_sounds")),
+//				CH_SOUNDS,
+//				Lifecycle.stable()));
 	}
 }
