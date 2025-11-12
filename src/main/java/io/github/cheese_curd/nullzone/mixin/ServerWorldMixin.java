@@ -79,4 +79,16 @@ public class ServerWorldMixin
 			}
 		}
 	}
+
+	@Inject(method = "tickTime", at = @At("HEAD"), cancellable = true)
+	private void nullzoneTime(CallbackInfo ci) {
+		ServerWorld world = (ServerWorld) (Object) this;
+
+		if (world.getRegistryKey().getValue().getNamespace().equals("nullzone")) {
+			long time = world.getTimeOfDay();
+
+			world.setTimeOfDay(time + 4); // 5 Minute daylight cycle
+			ci.cancel();
+		}
+	}
 }
