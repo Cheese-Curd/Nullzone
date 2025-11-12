@@ -5,11 +5,10 @@
 
   "block.nullzone.ceiling_tile": "Ceiling Tile",
   "block.nullzone.wet_ceiling_tile": "Wet Ceiling Tile",
+  "block.nullzone.ceiling_tile_slab": "Ceiling Tile Slab",
+  "block.nullzone.wet_ceiling_tile_slab": "Wet Ceiling Tile Slab",
 
   "block.nullzone.ceiling_light": "Ceiling Light",
-
-  "block.nullzone.cut_wallpaper_top": "Cut Wallpaper Top",
-  "block.nullzone.cut_wallpaper": "Cut Wallpaper",
 
   "block.nullzone.wallpaper_top": "Wallpaper Top",
   "block.nullzone.wallpaper": "Wallpaper",
@@ -29,5 +28,8 @@
 
   "block.nullzone.subflooring": "Subflooring",
 
-  "sounds.nullzone.light_buzz": "Fluorescent Light Hum-Buzz"
+  "sounds.nullzone.light_buzz": "Fluorescent Light Hum-Buzz",
+
+  "block.nullzone.ceiling_beam": "Ceiling Beam",
+  "block.nullzone.airduct_tube": "Airduct Tube"
 }

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nullzone:block/wet_ceiling"
+      "model": "nullzone:block/ceiling"
     }
   }
 }

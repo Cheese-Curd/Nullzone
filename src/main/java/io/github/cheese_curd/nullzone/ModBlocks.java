@@ -47,6 +47,9 @@ public class ModBlocks
 	static QuiltBlockSettings OFFICE_WALL_SETTINGS = QuiltBlockSettings.copyOf(Blocks.OAK_PLANKS);
 
 	public static final Block CEILING_TILE = makeBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
+	public static final SlabBlock CEILING_TILE_SLAB = new SlabBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
+
+	public static final SlabBlock CEILING_BEAM = new SlabBlock(QuiltBlockSettings.copyOf(Blocks.IRON_BLOCK).noCollision().nonOpaque());
 
 	public static final Block CONCRETE_BRICKS            = makeBlock(CONCRETE_SETTINGS);
 	public static final Block CONCRETE_FLOOR             = makeBlock(CONCRETE_SETTINGS);
@@ -65,6 +68,7 @@ public class ModBlocks
 
 	public static final WetBlock WET_CEILING      = new WetBlock(CONCRETE_SETTINGS, 25F);
 	public static final WetBlock WET_CEILING_TILE = new WetBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F);
+	public static final WetSlab  WET_CEILING_TILE_SLAB = new WetSlab(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL), 25F);
 
 	// Office
 	public static final Block OFFICE_WALL_TOP    = makeBlock(OFFICE_WALL_SETTINGS);
@@ -77,9 +81,14 @@ public class ModBlocks
 
 	public static final Block OFFICE_CARPET = new WetRotatableBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
 
+	public static final Block AIRDUCT_TUBE = new PillarBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
+
 	public static void register(ModContainer mod)
 	{
 		registerBlock(mod, "ceiling_tile", CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "ceiling_tile_slab", CEILING_TILE_SLAB, Nullzone.ITEM_NO_SETTINGS);
+
+		registerBlock(mod, "ceiling_beam", CEILING_BEAM, Nullzone.ITEM_NO_SETTINGS);
 
 		registerBlock(mod, "concrete_bricks",      CONCRETE_BRICKS, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "concrete_floor",       CONCRETE_FLOOR, Nullzone.ITEM_NO_SETTINGS);
@@ -115,6 +124,10 @@ public class ModBlocks
 		// Wet Blocks
 		registerBlock(mod, "wet_ceiling", WET_CEILING, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "wet_ceiling_tile", WET_CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "wet_ceiling_tile_slab", WET_CEILING_TILE_SLAB, Nullzone.ITEM_NO_SETTINGS);
+
+
+		registerBlock(mod, "airduct_tube", AIRDUCT_TUBE, Nullzone.ITEM_NO_SETTINGS);
 
 
 		ItemGroupEvents.modifyEntriesEvent(Nullzone.NULLZONE_GROUP_KEY).register(entries -> {

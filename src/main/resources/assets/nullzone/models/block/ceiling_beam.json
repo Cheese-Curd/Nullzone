@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "nullzone:block/ceiling_beam_full",
+    "top": "nullzone:block/ceiling_beam_full",
+    "side": "nullzone:block/ceiling_beam"
+  }
+}

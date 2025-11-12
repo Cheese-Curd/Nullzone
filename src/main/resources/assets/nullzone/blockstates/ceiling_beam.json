@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "nullzone:block/ceiling_beam" },
+    "type=top":    { "model": "nullzone:block/ceiling_beam_top" },
+    "type=double": { "model": "nullzone:block/ceiling_beam_full" }
+  }
+}

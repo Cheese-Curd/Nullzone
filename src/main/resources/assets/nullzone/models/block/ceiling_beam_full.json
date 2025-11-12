@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "nullzone:block/ceiling"
+    "all": "nullzone:block/ceiling_beam_full"
   }
 }

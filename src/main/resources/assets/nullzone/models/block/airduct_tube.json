@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "nullzone:block/airduct_tube_end",
+    "side": "nullzone:block/airduct_tube"
+  }
+}
