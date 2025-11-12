@@ -69,7 +69,8 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 	public static NbtGroup createGroup() {
 		NbtGroup.Builder builder = NbtGroup.Builder
 			.create(ModLimGen.ABANDONED_OFFICES_ID)
-//			.with("decoration", 1, 4)
+			.with("ceiling_decoration", 1, 2)
+			.with("rare_ceiling_decoration", 1, 1)
 			.with("single", "single")
 			.with("base", "base")
 			.with("base_dark", "base_dark");
@@ -148,6 +149,23 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
 			else
 				generateNbt(region, blockPos, nbtGroup.nbtId("base", "base"));
+
+			int ceilDecor   = random.nextInt(3);
+			boolean rareGen = false;
+
+			for (int i = 1; ceilDecor > i; i++)
+			{
+				if (random.nextDouble() < 0.25)
+				{
+					if (random.nextDouble() > 0.9 && !rareGen)
+					{
+						generateNbt(region, blockPos, nbtGroup.pick("rare_ceiling_decoration", random), Manipulation.random(random));
+						rareGen = true;
+					}
+					else
+						generateNbt(region, blockPos, nbtGroup.pick("ceiling_decoration", random), Manipulation.random(random));
+				}
+			}
 		}
 	}
 
@@ -188,7 +206,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 		{
 			if (state.isOf(ModBlocks.CEILING_TILE))
 				if (random.nextDouble() < 0.2)
-					region.setBlockState(pos, ModBlocks.WET_CEILING_TILE.getDefaultState(), Block.NOTIFY_ALL, 1);
+					region.setBlockState(pos, ModBlocks.WET_CEILING_TILE.getDefaultState(), Block.NOTIFY_ALL);
 
 			if (state.isOf(ModBlocks.OFFICE_CARPET))
 			{
@@ -197,18 +215,26 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 					BlockPos abovePos = pos.add(new Vec3i(0,1, 0));
 
 					if (region.getBlockState(abovePos).isOf(Blocks.AIR))
-					{
-						region.setBlockState(abovePos, ModBlocks.SUBFLOORING.getDefaultState(), 3);
-					}
+						region.setBlockState(abovePos, ModBlocks.SUBFLOORING.getDefaultState(), Block.NOTIFY_ALL);
 				}
 
 				if (random.nextDouble() > 0.15)
 				{
 					Direction dir = state.get(RotatableBlock.FACING);
 
-					region.setBlockState(pos, state.with(WetRotatableBlock.WET, true), 3);
+					region.setBlockState(pos, state.with(WetRotatableBlock.WET, true), Block.NOTIFY_ALL);
 				}
 			}
 		}
+
+		if (state.isOf(ModBlocks.CEILING_TILE_SLAB) || state.isOf(ModBlocks.WET_CEILING_TILE_SLAB))
+			if (random.nextDouble() > 0.8)
+				region.setBlockState(
+					pos.add(ChunkGenBase.randomCircularOffset(random, 5, true)),
+					ModBlocks.CEILING_BEAM.getDefaultState(), Block.NOTIFY_ALL);
+
+		if (state.isOf(ModBlocks.CEILING_BEAM))
+			if (random.nextBoolean() && random.nextDouble() < 0.25)
+				region.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
 	}
 }
