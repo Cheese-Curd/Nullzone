@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.chunk.Chunk;
@@ -63,7 +64,7 @@ public class ChunkGenBase
 
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				for (int y = minY + 1; y <= maxY; y++) {
+				for (int y = minY; y <= maxY; y++) {
 					chunk.setBlockState(new BlockPos(x, y, z), block.getDefaultState(), false);
 				}
 			}
@@ -113,9 +114,24 @@ public class ChunkGenBase
 		}
 	}
 
+	public static Vec3i randomCircularOffset(RandomGenerator random, double maxRadius, boolean centerBias) {
+		double angle    = random.nextDouble() * 2 * Math.PI;
+		double distance = random.nextDouble() * maxRadius;
+
+		if (centerBias)
+			distance = Math.sqrt(distance) * maxRadius;
+
+		int offsetX = (int) Math.round(Math.cos(angle) * distance);
+		int offsetZ = (int) Math.round(Math.sin(angle) * distance);
+
+		return new Vec3i(offsetX, 0, offsetZ);
+	}
+
 	public RandomGenerator modifyStructure(ChunkRegion region, BlockPos pos, BlockState state, Optional<NbtCompound> blockEntityNbt)
 	{
 		if (state.isOf(Blocks.STRUCTURE_BLOCK))
+			region.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL, 1);
+		if (state.isOf(Blocks.STRUCTURE_VOID))
 			region.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL, 1);
 
 		// Wet Blocks
@@ -126,6 +142,9 @@ public class ChunkGenBase
 		if (state.isOf(ModBlocks.CEILING_TILE))
 			if (random.nextDouble() < 0.2)
 				region.setBlockState(pos, ModBlocks.WET_CEILING_TILE.getDefaultState(), Block.NOTIFY_ALL, 1);
+		if (state.isOf(ModBlocks.CEILING_TILE_SLAB))
+			if (random.nextDouble() < 0.2)
+				region.setBlockState(pos, ModBlocks.WET_CEILING_TILE_SLAB.getDefaultState(), Block.NOTIFY_ALL, 1);
 
 		if (state.isOf(Blocks.COBWEB))
 			if (random.nextDouble() < 0.5)
