@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.cheese_curd.nullzone.ModBlocks;
 import io.github.cheese_curd.nullzone.ModLimGen;
 import io.github.cheese_curd.nullzone.Nullzone;
+import io.github.cheese_curd.nullzone.blocks.CuttableBlock;
 import io.github.cheese_curd.nullzone.blocks.RotatableBlock;
 import io.github.cheese_curd.nullzone.blocks.WetRotatableBlock;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
@@ -70,8 +71,8 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 		NbtGroup.Builder builder = NbtGroup.Builder
 			.create(ModLimGen.ABANDONED_OFFICES_ID)
 			.with("ceiling_decoration", 1, 2)
-			.with("rare_ceiling_decoration", 1, 1)
-			.with("single", "single")
+			.with("rare_ceiling_decoration", 1, 2)
+			.with("walls", 1, 4)
 			.with("base", "base")
 			.with("base_dark", "base_dark");
 
@@ -131,9 +132,8 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 			BlockPos blockPos = pos.toBlock();
 
-			// Decorate the room
-			// Reason this is before is for rooms that have certain walls that we don't want to overwrite
-//			if (random.nextDouble() < 0.5)
+			// Add Decoration
+//			if (random.nextBoolean())
 //				generateNbt(region, blockPos.up(1), nbtGroup.pick("decoration", random), Manipulation.random(random));
 
 //			if (!dir.isEmpty())
@@ -149,6 +149,10 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
 			else
 				generateNbt(region, blockPos, nbtGroup.nbtId("base", "base"));
+
+			// Add Walls
+			if (random.nextDouble() > 0.25)
+				generateNbt(region, blockPos.up(1), nbtGroup.pick("walls", random), Manipulation.random(random));
 
 			int ceilDecor   = random.nextInt(3);
 			boolean rareGen = false;
@@ -195,6 +199,14 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 	@Override
 	public void method_40450(List<String> list, RandomState randomState, BlockPos pos) {}
 
+	private void makeCarpetWet(ChunkRegion region, BlockPos pos)
+	{
+		region.setBlockState(pos, Blocks.STONE.getDefaultState(), Block.FORCE_STATE);
+//		BlockState state = region.getBlockState(pos);
+//		if (state.contains(WetRotatableBlock.WET))
+//			region.setBlockState(pos, state.with(WetRotatableBlock.WET, true), Block.FORCE_STATE);
+	}
+
 	@Override
 	protected void modifyStructure(ChunkRegion region, BlockPos pos, BlockState state, Optional<NbtCompound> blockEntityNbt) {
 		super.modifyStructure(region, pos, state, blockEntityNbt);
@@ -202,39 +214,67 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 		RandomGenerator random = chunkGenBase.modifyStructure(region, pos, state, blockEntityNbt);
 
 //		if (wetCells[curMaze.getX()][curMaze.getY()])
-		if (isWet)
+//		if (isWet)
+//		{
+//			if (state.isOf(ModBlocks.CEILING_TILE))
+//				if (random.nextDouble() < 0.2)
+//					region.setBlockState(pos, ModBlocks.WET_CEILING_TILE.getDefaultState(), Block.FORCE_STATE);
+//
+//			if (state.isOf(ModBlocks.OFFICE_CARPET))
+//			{
+//				if (random.nextDouble() > 0.75)
+//				{
+//					BlockPos abovePos = pos.up();
+//
+//					if (region.getBlockState(abovePos).isOf(Blocks.AIR))
+//						region.setBlockState(abovePos, ModBlocks.SUBFLOORING.getDefaultState(), Block.FORCE_STATE);
+//				}
+//
+//				if (random.nextDouble() > 0.15)
+//					makeCarpetWet(region, pos);
+//			}
+//		}
+
+		if (state.isOf(ModBlocks.CEILING_TILE_SLAB) || state.isOf(ModBlocks.WET_CEILING_TILE_SLAB))
 		{
-			if (state.isOf(ModBlocks.CEILING_TILE))
-				if (random.nextDouble() < 0.2)
-					region.setBlockState(pos, ModBlocks.WET_CEILING_TILE.getDefaultState(), Block.NOTIFY_ALL);
-
-			if (state.isOf(ModBlocks.OFFICE_CARPET))
+			if (random.nextDouble() > 0.8)
 			{
-				if (random.nextDouble() > 0.75)
-				{
-					BlockPos abovePos = pos.add(new Vec3i(0,1, 0));
-
-					if (region.getBlockState(abovePos).isOf(Blocks.AIR))
-						region.setBlockState(abovePos, ModBlocks.SUBFLOORING.getDefaultState(), Block.NOTIFY_ALL);
-				}
-
-				if (random.nextDouble() > 0.15)
-				{
-					Direction dir = state.get(RotatableBlock.FACING);
-
-					region.setBlockState(pos, state.with(WetRotatableBlock.WET, true), Block.NOTIFY_ALL);
-				}
+				BlockPos newPos = pos.add(ChunkGenBase.randomCircularOffset(random, 5, true));
+				if (region.getBlockState(newPos).isOf(ModBlocks.CEILING_TILE_SLAB))
+					region.setBlockState(newPos,
+						ModBlocks.CEILING_BEAM.getDefaultState(), Block.FORCE_STATE);
 			}
 		}
 
-		if (state.isOf(ModBlocks.CEILING_TILE_SLAB) || state.isOf(ModBlocks.WET_CEILING_TILE_SLAB))
-			if (random.nextDouble() > 0.8)
-				region.setBlockState(
-					pos.add(ChunkGenBase.randomCircularOffset(random, 5, true)),
-					ModBlocks.CEILING_BEAM.getDefaultState(), Block.NOTIFY_ALL);
-
 		if (state.isOf(ModBlocks.CEILING_BEAM))
 			if (random.nextBoolean() && random.nextDouble() < 0.25)
-				region.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
+				region.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.FORCE_STATE);
+
+		if (state.isOf(ModBlocks.WALLPAPER))
+			if (random.nextBoolean() && random.nextDouble() < 0.25)
+				region.setBlockState(pos, state.with(CuttableBlock.CUT, true), Block.FORCE_STATE);
+		if (state.isOf(ModBlocks.WALLPAPER_TOP))
+			if (random.nextBoolean() && random.nextDouble() < 0.25)
+				region.setBlockState(pos, state.with(CuttableBlock.CUT, true), Block.FORCE_STATE);
+
+		// Sky Leaking
+//		if (state.isOf(ModBlocks.OFFICE_CARPET))
+//		{
+//			boolean skyVisible = ChunkGenBase.canSeeSky(region, pos);
+//
+//			if (skyVisible)
+//			{
+//				// The carpet that can see the sky
+//				makeCarpetWet(region, pos);
+//
+//				// Surrounding Carpet
+//				makeCarpetWet(region, pos.add(1, 0, 0));
+//				makeCarpetWet(region, pos.add(0, 0, 1));
+//				makeCarpetWet(region, pos.add(0, 0, -1));
+//				makeCarpetWet(region, pos.add(-1, 0, 0));
+//
+////				Nullzone.LOGGER.info("Made wet carpet at {} due to sky", pos.toString());
+//			}
+//		}
 	}
 }
