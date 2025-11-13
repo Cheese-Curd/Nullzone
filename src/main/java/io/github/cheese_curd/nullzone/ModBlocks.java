@@ -83,6 +83,8 @@ public class ModBlocks
 
 	public static final Block AIRDUCT_TUBE = new PillarBlock(QuiltBlockSettings.copyOf(Blocks.WHITE_WOOL));
 
+	public static final Block OFFICE_DOOR = new DoorBlock(QuiltBlockSettings.copyOf(Blocks.OAK_DOOR), BlockSetType.OAK);
+
 	public static void register(ModContainer mod)
 	{
 		registerBlock(mod, "ceiling_tile", CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
@@ -109,6 +111,8 @@ public class ModBlocks
 		registerBlock(mod, "wallpaper_bottom", WALLPAPER_BOTTOM, Nullzone.ITEM_NO_SETTINGS);
 
 		registerBlock(mod, "office_carpet", OFFICE_CARPET, Nullzone.ITEM_NO_SETTINGS);
+
+		registerBlock(mod, "office_door", OFFICE_DOOR, Nullzone.ITEM_NO_SETTINGS);
 
 		// Concrete Stairs
 //		Registry.register(Registries.BLOCK, new Identifier(mod.metadata().id(), "concrete_wall_stairs"), CONCRETE_WALL_STAIRS);

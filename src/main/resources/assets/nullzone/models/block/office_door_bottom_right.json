@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right",
+  "textures": {
+    "bottom": "nullzone:block/office_door_bottom",
+    "top": "nullzone:block/office_door_top"
+  }
+}
