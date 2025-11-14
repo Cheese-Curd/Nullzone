@@ -6,10 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.cheese_curd.nullzone.ModBlocks;
 import io.github.cheese_curd.nullzone.ModLimGen;
-import io.github.cheese_curd.nullzone.Nullzone;
 import io.github.cheese_curd.nullzone.blocks.CuttableBlock;
-import io.github.cheese_curd.nullzone.blocks.RotatableBlock;
-import io.github.cheese_curd.nullzone.blocks.WetRotatableBlock;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.Manipulation;
 import net.ludocrypt.limlib.api.world.NbtGroup;
@@ -25,12 +22,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerLightingProvider;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Property;
 import net.minecraft.structure.StructureTemplateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -72,7 +66,8 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 			.create(ModLimGen.ABANDONED_OFFICES_ID)
 			.with("ceiling_decoration", 1, 2)
 			.with("rare_ceiling_decoration", 1, 2)
-			.with("walls", 1, 4)
+			.with("walls", 1, 6)
+			.with("rare_walls", 1, 2)
 			.with("base", "base")
 			.with("base_dark", "base_dark");
 
@@ -123,27 +118,9 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 //		wetCells[mazePos.getX()][mazePos.getY()] = isWet;
 
-		if (piece.getFirst() != MazePiece.E) {
-			Identifier nbtFile;
-
-			// Stole this from LudoCrypt
-			// https://github.com/LudoCrypt/The-Corners/blob/cb8d030ce315d7cac4207dfd5b2ce0fee89b6a7c/src/main/java/net/ludocrypt/corners/world/chunk/CommunalCorridorsChunkGenerator.java#L434
-			String dir = ChunkGenBase.getCellDir(state);
-
+		if (piece.getFirst() != MazePiece.E)
+		{
 			BlockPos blockPos = pos.toBlock();
-
-			// Add Decoration
-//			if (random.nextBoolean())
-//				generateNbt(region, blockPos.up(1), nbtGroup.pick("decoration", random), Manipulation.random(random));
-
-//			if (!dir.isEmpty())
-//			{
-//				nbtFile = nbtGroup.nbtId("maze/" + dir, dir);
-//
-//				generateNbt(region, blockPos.up(1), nbtFile);
-//			}
-//			else
-//				Nullzone.LOGGER.info("NO DIRECTION!!");
 
 			if (random.nextDouble() <= 0.25 || isWet)
 				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
@@ -152,7 +129,10 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 			// Add Walls
 			if (random.nextDouble() > 0.25)
-				generateNbt(region, blockPos.up(1), nbtGroup.pick("walls", random), Manipulation.random(random));
+				if (random.nextDouble() > 0.8)
+					generateNbt(region, blockPos, nbtGroup.pick("rare_walls", random), Manipulation.random(random));
+				else
+					generateNbt(region, blockPos.up(1), nbtGroup.pick("walls", random), Manipulation.random(random));
 
 			int ceilDecor   = random.nextInt(3);
 			boolean rareGen = false;
@@ -258,23 +238,23 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 				region.setBlockState(pos, state.with(CuttableBlock.CUT, true), Block.FORCE_STATE);
 
 		// Sky Leaking
-//		if (state.isOf(ModBlocks.OFFICE_CARPET))
-//		{
-//			boolean skyVisible = ChunkGenBase.canSeeSky(region, pos);
-//
-//			if (skyVisible)
-//			{
-//				// The carpet that can see the sky
-//				makeCarpetWet(region, pos);
-//
-//				// Surrounding Carpet
-//				makeCarpetWet(region, pos.add(1, 0, 0));
-//				makeCarpetWet(region, pos.add(0, 0, 1));
-//				makeCarpetWet(region, pos.add(0, 0, -1));
-//				makeCarpetWet(region, pos.add(-1, 0, 0));
-//
-////				Nullzone.LOGGER.info("Made wet carpet at {} due to sky", pos.toString());
-//			}
-//		}
+		if (state.isOf(ModBlocks.OFFICE_CARPET))
+		{
+			boolean skyVisible = ChunkGenBase.canSeeSky(region, pos);
+
+			if (skyVisible)
+			{
+				// The carpet that can see the sky
+				makeCarpetWet(region, pos);
+
+				// Surrounding Carpet
+				makeCarpetWet(region, pos.add(1, 0, 0));
+				makeCarpetWet(region, pos.add(0, 0, 1));
+				makeCarpetWet(region, pos.add(0, 0, -1));
+				makeCarpetWet(region, pos.add(-1, 0, 0));
+
+//				Nullzone.LOGGER.info("Made wet carpet at {} due to sky", pos.toString());
+			}
+		}
 	}
 }
