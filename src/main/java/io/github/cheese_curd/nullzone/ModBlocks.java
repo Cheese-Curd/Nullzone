@@ -85,6 +85,11 @@ public class ModBlocks
 
 	public static final Block OFFICE_DOOR = new DoorBlock(QuiltBlockSettings.copyOf(Blocks.OAK_DOOR), BlockSetType.OAK);
 
+	public static final Block DIRT_STAIN = new OverlayBlock(QuiltBlockSettings.copyOf(Blocks.DIRT)
+		.noCollision().nonOpaque().breakInstantly());
+	public static final Block MOLD_STAIN = new OverlayBlock(QuiltBlockSettings.copyOf(Blocks.DIRT)
+		.noCollision().nonOpaque().breakInstantly());
+
 	public static void register(ModContainer mod)
 	{
 		registerBlock(mod, "ceiling_tile", CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
@@ -130,9 +135,10 @@ public class ModBlocks
 		registerBlock(mod, "wet_ceiling_tile", WET_CEILING_TILE, Nullzone.ITEM_NO_SETTINGS);
 		registerBlock(mod, "wet_ceiling_tile_slab", WET_CEILING_TILE_SLAB, Nullzone.ITEM_NO_SETTINGS);
 
-
 		registerBlock(mod, "airduct_tube", AIRDUCT_TUBE, Nullzone.ITEM_NO_SETTINGS);
 
+		registerBlock(mod, "dirt_stain", DIRT_STAIN, Nullzone.ITEM_NO_SETTINGS);
+		registerBlock(mod, "mold_stain", MOLD_STAIN, Nullzone.ITEM_NO_SETTINGS);
 
 		ItemGroupEvents.modifyEntriesEvent(Nullzone.NULLZONE_GROUP_KEY).register(entries -> {
 			for (Block block : MOD_BLOCKS)

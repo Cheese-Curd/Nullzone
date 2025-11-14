@@ -18,5 +18,8 @@ public class NullzoneClient implements ClientModInitializer
 	{
 		makeCutoutBlock(ModBlocks.CEILING_BEAM);
 		makeCutoutBlock(ModBlocks.OFFICE_DOOR);
+
+		makeCutoutBlock(ModBlocks.DIRT_STAIN);
+		makeCutoutBlock(ModBlocks.MOLD_STAIN);
 	}
 }

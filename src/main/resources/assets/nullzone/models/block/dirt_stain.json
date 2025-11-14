@@ -1,0 +1,17 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "nullzone:block/dirt_stain",
+    "stain": "nullzone:block/dirt_stain"
+  },
+  "elements": [
+    {
+      "from": [0, 0.01, 0],
+      "to": [16, 0.01, 16],
+      "faces": {
+        "up":   { "uv": [0, 0, 16, 16], "texture": "#stain" },
+        "down": { "uv": [0, 0, 16, 16], "texture": "#stain" }
+      }
+    }
+  ]
+}

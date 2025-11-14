@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "nullzone:block/dirt_stain" },
+    "facing=south": { "model": "nullzone:block/dirt_stain", "y": 180 },
+    "facing=west":  { "model": "nullzone:block/dirt_stain", "y": 270 },
+    "facing=east":  { "model": "nullzone:block/dirt_stain", "y": 90 }
+  }
+}
