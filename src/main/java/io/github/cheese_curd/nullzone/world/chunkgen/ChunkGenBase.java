@@ -70,6 +70,23 @@ public class ChunkGenBase
 		}
 	}
 
+	public static void fillBelowYWith(int maxY, Block block, Chunk chunk, ChunkRegion region) {
+		int minY = region.getBottomY();
+
+		BlockState bedrock = Blocks.BEDROCK.getDefaultState();
+
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+
+				chunk.setBlockState(new BlockPos(x, minY, z), bedrock, false);
+
+				for (int y = minY + 1; y < maxY - 1; y++) {
+					chunk.setBlockState(new BlockPos(x, y, z), block.getDefaultState(), false);
+				}
+			}
+		}
+	}
+
 	public static void fillAboveYWith(int minY, Block block, Chunk chunk, ChunkRegion region)
 	{
 		int maxY = region.getTopY();

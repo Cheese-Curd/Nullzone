@@ -23,6 +23,7 @@ public class ModLimGen implements LimlibRegistrar
 {
 	public static final Identifier CONCRETE_HALLS_ID    = new Identifier(Nullzone.MOD_ID, "concrete_halls");
 	public static final Identifier ABANDONED_OFFICES_ID = new Identifier(Nullzone.MOD_ID, "abandoned_offices");
+	public static final Identifier STONESTILLS_ID = new Identifier(Nullzone.MOD_ID, "stonestills");
 
 	static DimensionType genericDimType(Identifier id)
 	{
@@ -70,11 +71,26 @@ public class ModLimGen implements LimlibRegistrar
 		)
 	);
 
+	public static final LimlibWorld STONESTILLS = new LimlibWorld(
+		() -> genericDimType(STONESTILLS_ID),
+		(registry) -> new DimensionOptions(
+			registry.get(RegistryKeys.DIMENSION_TYPE)
+				.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, STONESTILLS_ID))
+				.get(),
+			new StonestillsChunkGen(
+				new FixedBiomeSource(registry.get(RegistryKeys.BIOME)
+					.getHolder(NullBiomes.STONESTILLS_BIOME).get()), 9, 9, 0
+			)
+		)
+	);
+
 	// World Keys
 	public static final RegistryKey<World> CONCRETE_HALLS_KEY = RegistryKey
 		.of(RegistryKeys.WORLD, CONCRETE_HALLS_ID);
 	public static final RegistryKey<World> ABANDONED_OFFICES_KEY = RegistryKey
 		.of(RegistryKeys.WORLD, ABANDONED_OFFICES_ID);
+	public static final RegistryKey<World> STONESTILLS_KEY = RegistryKey
+		.of(RegistryKeys.WORLD, STONESTILLS_ID);
 
 	// Effects 'n Such
 //	public static final SoundEffects CH_SOUNDS = new SoundEffects(
@@ -99,6 +115,7 @@ public class ModLimGen implements LimlibRegistrar
 
 			registry.register(NullBiomes.CONCRETE_HALLS_BIOME, ConcreteHallsBiome.create(features, carvers), Lifecycle.stable());
 			registry.register(NullBiomes.ABANDONED_OFFICES_BIOME, AbandonedOfficesBiome.create(features, carvers), Lifecycle.stable());
+			registry.register(NullBiomes.STONESTILLS_BIOME, AbandonedOfficesBiome.create(features, carvers), Lifecycle.stable());
 		});
 
 		LimlibWorld.LIMLIB_WORLD.register(
@@ -110,6 +127,12 @@ public class ModLimGen implements LimlibRegistrar
 		LimlibWorld.LIMLIB_WORLD.register(
 			RegistryKey.of(LimlibWorld.LIMLIB_WORLD_KEY, ABANDONED_OFFICES_ID),
 			ABANDONED_OFFICES,
+			Lifecycle.stable()
+		);
+
+		LimlibWorld.LIMLIB_WORLD.register(
+			RegistryKey.of(LimlibWorld.LIMLIB_WORLD_KEY, STONESTILLS_ID),
+			STONESTILLS,
 			Lifecycle.stable()
 		);
 
