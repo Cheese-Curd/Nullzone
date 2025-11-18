@@ -95,9 +95,9 @@ public class StonestillsChunkGen extends AbstractNbtChunkGenerator
 		generateNbt(region, pos.toBlock().up(5), nbtGroup.pick("wall", random), Manipulation.CLOCKWISE_90);
 		generateNbt(region, pos.toBlock().up(1), nbtGroup.pick("wall", random), Manipulation.CLOCKWISE_90);
 
-		boolean isLadder;
+		boolean isLadder = random.nextDouble() < 0.025;
 
-		if (isLadder = (random.nextDouble() < 0.025))
+		if (isLadder)
 			generateNbt(region, pos.toBlock().down(8), nbtGroup.nbtId("ladder", "ladder"));
 		else
 			generateNbt(region, pos.toBlock(), nbtGroup.nbtId("base", "base"));
