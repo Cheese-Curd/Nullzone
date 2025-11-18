@@ -1,6 +1,12 @@
 package io.github.cheese_curd.nullzone;
 
+import io.github.cheese_curd.nullzone.mixin.PlayerPlacedHolder;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -9,6 +15,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.quiltmc.loader.api.ModContainer;
@@ -52,5 +59,28 @@ public class Nullzone implements ModInitializer {
 	    ModItems.register(mod);
 	    ModBlocks.register(mod);
 		NullBiomes.init();
+
+		// Portal
+		CustomPortalBuilder.beginPortal()
+			.frameBlock(Blocks.NETHER_BRICKS)
+			.lightWithWater()
+			.destDimID(ModLimGen.ABANDONED_OFFICES_ID)
+			.tintColor(0x000000)
+			.setPortalSearchYRange(0, 0)
+			.forcedSize(3, 3)
+			.registerPortal();
+
+		AttackBlockCallback.EVENT.register((player, world, hand, pos, dir) ->
+		{
+			if (world.isClient()) return ActionResult.PASS;
+
+			BlockState state = world.getBlockState(pos);
+			boolean playerPlaced = ((PlayerPlacedHolder)state.getBlock()).wasPlayerPlaced();
+
+			if (world.getRegistryKey().getValue().getNamespace().equals(MOD_ID) && !playerPlaced)
+				return ActionResult.FAIL;
+
+			return ActionResult.PASS;
+		});
     }
 }
