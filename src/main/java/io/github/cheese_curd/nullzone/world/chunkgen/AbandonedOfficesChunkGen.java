@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.cheese_curd.nullzone.ModBlocks;
 import io.github.cheese_curd.nullzone.ModLimGen;
 import io.github.cheese_curd.nullzone.blocks.CuttableBlock;
+import io.github.cheese_curd.nullzone.blocks.WetRotatableBlock;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.Manipulation;
 import net.ludocrypt.limlib.api.world.NbtGroup;
@@ -25,6 +26,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructureTemplateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -33,8 +35,7 @@ import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.gen.RandomState;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
@@ -153,6 +154,35 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 		}
 	}
 
+	private void applyPostStructurePass(ChunkRegion region, ChunkPos chunkPos) {
+		int baseY = 0;
+
+		// Loop through all blocks in this chunk at the base layer
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				BlockPos pos = new BlockPos(chunkPos.getStartX() + x, baseY, chunkPos.getStartZ() + z);
+				BlockState state = region.getBlockState(pos);
+
+				if (state.isOf(ModBlocks.OFFICE_CARPET)) {
+					boolean skyVisible = ChunkGenBase.canSeeSky(region, pos);
+
+					if (skyVisible) {
+						// Wet the base carpet
+						makeCarpetWet(region, pos);
+
+						// Wet surrounding carpet in X/Z directions
+						makeCarpetWet(region, pos.add(1, 0, 0));
+						makeCarpetWet(region, pos.add(-1, 0, 0));
+						makeCarpetWet(region, pos.add(0, 0, 1));
+						makeCarpetWet(region, pos.add(0, 0, -1));
+					}
+				}
+			}
+		}
+	}
+
+
+
 	@Override
 	public CompletableFuture<Chunk> populateNoise(
 		ChunkRegion chunkRegion, ChunkStatus targetStatus, Executor executor,
@@ -163,6 +193,9 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 //		fillBelowZeroWithStone(chunk, chunkRegion);
 
 		this.mazeGenerator.generateMaze(new MazeComponent.Vec2i(chunk.getPos().getStartPos()), chunkRegion, this::newMaze, this::decorateCell);
+
+		executor.execute(() -> applyPostStructurePass(chunkRegion, chunk.getPos()));
+
 		return CompletableFuture.completedFuture(chunk);
 	}
 
@@ -181,10 +214,9 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 
 	private void makeCarpetWet(ChunkRegion region, BlockPos pos)
 	{
-		region.setBlockState(pos, Blocks.STONE.getDefaultState(), Block.FORCE_STATE);
-//		BlockState state = region.getBlockState(pos);
-//		if (state.contains(WetRotatableBlock.WET))
-//			region.setBlockState(pos, state.with(WetRotatableBlock.WET, true), Block.FORCE_STATE);
+		BlockState state = region.getBlockState(pos);
+		if (state.contains(WetRotatableBlock.WET))
+			region.setBlockState(pos, state.with(WetRotatableBlock.WET, true), Block.FORCE_STATE);
 	}
 
 	@Override
@@ -236,25 +268,5 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 		if (state.isOf(ModBlocks.WALLPAPER_TOP))
 			if (random.nextBoolean() && random.nextDouble() < 0.25)
 				region.setBlockState(pos, state.with(CuttableBlock.CUT, true), Block.FORCE_STATE);
-
-		// Sky Leaking
-		if (state.isOf(ModBlocks.OFFICE_CARPET))
-		{
-			boolean skyVisible = ChunkGenBase.canSeeSky(region, pos);
-
-			if (skyVisible)
-			{
-				// The carpet that can see the sky
-				makeCarpetWet(region, pos);
-
-				// Surrounding Carpet
-				makeCarpetWet(region, pos.add(1, 0, 0));
-				makeCarpetWet(region, pos.add(0, 0, 1));
-				makeCarpetWet(region, pos.add(0, 0, -1));
-				makeCarpetWet(region, pos.add(-1, 0, 0));
-
-//				Nullzone.LOGGER.info("Made wet carpet at {} due to sky", pos.toString());
-			}
-		}
 	}
 }

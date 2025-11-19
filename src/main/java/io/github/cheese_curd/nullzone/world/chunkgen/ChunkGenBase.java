@@ -34,10 +34,10 @@ public class ChunkGenBase
 
 	public static boolean canSeeSky(ChunkRegion region, BlockPos pos)
 	{
-		for (int y = 1; y < region.getTopY(); y++)
+		for (int y = pos.getY() + 1; y < region.getTopY(); y++)
 		{
-			BlockState stateAbove = region.getBlockState(pos.up(y));
-			if (!stateAbove.isAir() || stateAbove.isOpaque())
+			BlockState stateAbove = region.getBlockState(new BlockPos(pos.getX(), y, pos.getZ()));
+			if (!stateAbove.isAir() && stateAbove.isOpaque())
 				return false;
 		}
 
