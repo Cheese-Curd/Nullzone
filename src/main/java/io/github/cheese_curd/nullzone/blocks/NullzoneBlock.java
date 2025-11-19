@@ -9,27 +9,28 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
+@Deprecated(forRemoval = true, since = "11/17/25")
 public class NullzoneBlock extends Block
 {
 	public NullzoneBlock(Settings settings) {
 		super(settings);
 	}
 
-	boolean cannotBreak(PlayerEntity player)
-	{
-		return (player.getWorld().getRegistryKey().getRegistry().getNamespace().equals(Nullzone.MOD_ID)
-			&& player.getWorld().getDifficulty() != Difficulty.EASY);
-	}
-
-	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (cannotBreak(player)) {
-			if (!world.isClient) {
-				world.setBlockState(pos, state, Block.NOTIFY_ALL);
-			}
-			return;
-		}
-
-		super.onBreak(world, pos, state, player);
-	}
+//	boolean cannotBreak(PlayerEntity player)
+//	{
+//		return (player.getWorld().getRegistryKey().getRegistry().getNamespace().equals(Nullzone.MOD_ID)
+//			&& player.getWorld().getDifficulty() != Difficulty.EASY);
+//	}
+//
+//	@Override
+//	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+//		if (cannotBreak(player)) {
+//			if (!world.isClient) {
+//				world.setBlockState(pos, state, Block.NOTIFY_ALL);
+//			}
+//			return;
+//		}
+//
+//		super.onBreak(world, pos, state, player);
+//	}
 }
