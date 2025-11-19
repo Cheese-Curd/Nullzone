@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -82,9 +83,18 @@ public class Nullzone implements ModInitializer {
 			boolean playerPlaced = PlayerPlacedStorage.get(serverWorld).isPlaced(pos);
 
 			if (!playerPlaced)
+			{
 				if (!worldKey.getPath().equals("stonestills"))
+				{
 					if (!state.isOf(ModBlocks.DIRT_STAIN) && !state.isOf(ModBlocks.MOLD_STAIN))
+					{
+						player.sendMessage(Text.translatable("message.nullzone.cantbreak"), true);
+						player.getMainHandStack().damage(1, player, p -> p.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+
 						return false;
+					}
+				}
+			}
 
 			PlayerPlacedStorage.get(serverWorld).clear(pos);
 			return true;

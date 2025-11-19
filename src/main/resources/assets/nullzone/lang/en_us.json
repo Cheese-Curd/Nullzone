@@ -1,4 +1,6 @@
 {
+  "message.nullzone.cantbreak": "Something is preventing you from breaking this block...",
+
   "itemGroup.nullzone.nullzone_group": "The Nullzone",
 
   "item.nullzone.wall_paper": "Wall Paper",
