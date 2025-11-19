@@ -4,7 +4,8 @@
 	"package": "io.github.cheese_curd.nullzone.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ServerWorldMixin"
+		"ServerWorldMixin",
+    "BlockMixin"
 	],
 	"client": [
 		"SplashTextMixin"
