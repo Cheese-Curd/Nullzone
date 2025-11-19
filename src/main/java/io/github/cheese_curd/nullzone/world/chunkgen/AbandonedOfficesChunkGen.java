@@ -190,7 +190,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 		ServerLightingProvider lightingProvider, Function<Chunk, CompletableFuture<Either<Chunk,
 			ChunkHolder.Unloaded>>> fullChunkConverter, List<Chunk> chunks, Chunk chunk)
 	{
-//		fillBelowZeroWithStone(chunk, chunkRegion);
+		ChunkGenBase.fillBelowZeroWith(Blocks.STONE, chunk, chunkRegion);
 
 		this.mazeGenerator.generateMaze(new MazeComponent.Vec2i(chunk.getPos().getStartPos()), chunkRegion, this::newMaze, this::decorateCell);
 
