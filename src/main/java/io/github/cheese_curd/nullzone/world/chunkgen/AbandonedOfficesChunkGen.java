@@ -68,7 +68,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 			.with("ceiling_decoration", 1, 2)
 			.with("rare_ceiling_decoration", 1, 2)
 			.with("walls", 1, 6)
-			.with("rare_walls", 1, 2)
+			.with("rare_walls", 1, 4)
 			.with("base", "base")
 			.with("base_dark", "base_dark");
 
@@ -80,7 +80,7 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 	public AbandonedOfficesChunkGen(BiomeSource biomeSource, int width, int height, int padding) {
 		super(biomeSource, createGroup());
 		this.mazeGenerator = new MazeGenerator<MazeComponent>(width, height, padding + width, padding + width, 0);
-		this.chunkGenBase = new ChunkGenBase();
+		this.chunkGenBase = new ChunkGenBase(ModLimGen.ABANDONED_OFFICES_ID);
 	}
 
 	@Override
@@ -123,11 +123,6 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 		{
 			BlockPos blockPos = pos.toBlock();
 
-			if (random.nextDouble() <= 0.25 || isWet)
-				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
-			else
-				generateNbt(region, blockPos, nbtGroup.nbtId("base", "base"));
-
 			// Add Walls
 			if (random.nextDouble() > 0.25)
 				if (random.nextDouble() > 0.8)
@@ -151,6 +146,11 @@ public class AbandonedOfficesChunkGen extends AbstractNbtChunkGenerator
 						generateNbt(region, blockPos, nbtGroup.pick("ceiling_decoration", random), Manipulation.random(random));
 				}
 			}
+
+			if (random.nextDouble() <= 0.25 || isWet)
+				generateNbt(region, blockPos, nbtGroup.nbtId("base_dark", "base_dark"));
+			else
+				generateNbt(region, blockPos, nbtGroup.nbtId("base", "base"));
 		}
 	}
 

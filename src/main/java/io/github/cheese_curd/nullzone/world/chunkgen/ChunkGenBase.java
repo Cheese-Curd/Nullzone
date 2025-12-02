@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.random.RandomGenerator;
@@ -19,6 +20,14 @@ import java.util.Optional;
 
 public class ChunkGenBase
 {
+	static BlockState bedrock;
+
+	public ChunkGenBase(Identifier id)
+	{
+		bedrock = Blocks.BEDROCK.getDefaultState();
+		Nullzone.LOGGER.info("Making new ChunkGenBase for Biome {}", id);
+	}
+
 	// (Kinda) stole this from LudoCrypt
 	// https://github.com/LudoCrypt/The-Corners/blob/cb8d030ce315d7cac4207dfd5b2ce0fee89b6a7c/src/main/java/net/ludocrypt/corners/world/chunk/CommunalCorridorsChunkGenerator.java#L434
 	public static String getCellDir(MazeComponent.CellState state) {
@@ -56,8 +65,6 @@ public class ChunkGenBase
 		int minY = region.getBottomY();
 		int maxY = 0;
 
-		BlockState bedrock = Blocks.BEDROCK.getDefaultState();
-
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 
@@ -73,16 +80,13 @@ public class ChunkGenBase
 	public static void fillBelowYWith(int maxY, Block block, Chunk chunk, ChunkRegion region) {
 		int minY = region.getBottomY();
 
-		BlockState bedrock = Blocks.BEDROCK.getDefaultState();
-
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 
 				chunk.setBlockState(new BlockPos(x, minY, z), bedrock, false);
 
-				for (int y = minY + 1; y < maxY - 1; y++) {
+				for (int y = minY + 1; y < maxY - 1; y++)
 					chunk.setBlockState(new BlockPos(x, y, z), block.getDefaultState(), false);
-				}
 			}
 		}
 	}
@@ -93,9 +97,10 @@ public class ChunkGenBase
 
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				for (int y = minY; y <= maxY; y++) {
+				for (int y = minY; y <= maxY; y++)
 					chunk.setBlockState(new BlockPos(x, y, z), block.getDefaultState(), false);
-				}
+
+				chunk.setBlockState(new BlockPos(x, maxY, z), bedrock, false);
 			}
 		}
 	}

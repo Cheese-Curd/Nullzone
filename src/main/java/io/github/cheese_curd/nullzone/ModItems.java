@@ -15,9 +15,11 @@ public class ModItems
 	}
 
 	public static final Item WALL_PAPER = makeItem(Nullzone.ITEM_NO_SETTINGS);
+	public static final Item PORTAL_LIGHTER = makeItem(Nullzone.ITEM_NO_SETTINGS);
 
 	public static void register(ModContainer mod)
 	{
 		Registry.register(Registries.ITEM, new Identifier(mod.metadata().id(), "wall_paper"), WALL_PAPER);
+		Registry.register(Registries.ITEM, new Identifier(mod.metadata().id(), "portal_lighter"), PORTAL_LIGHTER);
 	}
 }

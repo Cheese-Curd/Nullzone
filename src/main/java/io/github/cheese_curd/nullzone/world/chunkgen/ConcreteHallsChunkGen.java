@@ -13,6 +13,8 @@ import net.ludocrypt.limlib.api.world.chunk.AbstractNbtChunkGenerator;
 import net.ludocrypt.limlib.api.world.maze.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.LootableContainerBlockEntity;
+import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerLightingProvider;
@@ -66,7 +68,7 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 	public ConcreteHallsChunkGen(BiomeSource biomeSource, int width, int height, int padding) {
 		super(biomeSource, createGroup());
 		this.mazeGenerator = new MazeGenerator<MazeComponent>(width, height, padding + width, padding + width, 0);
-		this.chunkGenBase = new ChunkGenBase();
+		this.chunkGenBase = new ChunkGenBase(ModLimGen.CONCRETE_HALLS_ID);
 	}
 
 	@Override
@@ -154,4 +156,9 @@ public class ConcreteHallsChunkGen extends AbstractNbtChunkGenerator
 
 		chunkGenBase.modifyStructure(region, pos, state, blockEntityNbt);
 	}
+
+//	@Override
+//	protected Identifier getContainerLootTable(LootableContainerBlockEntity container) {
+//		return container.getCachedState().isOf(Blocks.CHEST) ? LootTables.WOODLAND_MANSION_CHEST : LootTables.SPAWN_BONUS_CHEST;
+//	}
 }

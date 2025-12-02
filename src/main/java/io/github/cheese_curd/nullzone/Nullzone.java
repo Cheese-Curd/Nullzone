@@ -17,10 +17,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
@@ -62,7 +59,8 @@ public class Nullzone implements ModInitializer {
 	    ModBlocks.register(mod);
 		NullBiomes.init();
 
-		// Portal
+		// "Portals"
+		// Abandoned Offices Portal
 		CustomPortalBuilder.beginPortal()
 			.frameBlock(Blocks.NETHER_BRICKS)
 			.lightWithWater()
@@ -70,6 +68,22 @@ public class Nullzone implements ModInitializer {
 			.tintColor(0x000000)
 			.setPortalSearchYRange(0, 0)
 			.forcedSize(3, 3)
+			.registerPortal();
+		// Concrete Halls Portal
+		CustomPortalBuilder.beginPortal()
+			.frameBlock(ModBlocks.CONCRETE_BRICKS)
+			.lightWithItem(ModItems.PORTAL_LIGHTER)
+			.destDimID(ModLimGen.CONCRETE_HALLS_ID)
+			.tintColor(0x808080)
+			.setPortalSearchYRange(0, 0)
+			.registerPortal();
+		// Stonestills Portal
+		CustomPortalBuilder.beginPortal()
+			.frameBlock(Blocks.STONE)
+			.lightWithItem(ModItems.PORTAL_LIGHTER)
+			.destDimID(ModLimGen.STONESTILLS_ID)
+			.tintColor(0xFFFFFF)
+			.setPortalSearchYRange(0, 0)
 			.registerPortal();
 
 		PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, ent) ->

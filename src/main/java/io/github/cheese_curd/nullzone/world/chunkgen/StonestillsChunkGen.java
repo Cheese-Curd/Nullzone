@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.cheese_curd.nullzone.ModLimGen;
+import io.github.cheese_curd.nullzone.NullLootTables;
 import io.github.cheese_curd.nullzone.Nullzone;
 import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.Manipulation;
@@ -14,8 +15,11 @@ import net.ludocrypt.limlib.api.world.maze.DepthFirstMaze;
 import net.ludocrypt.limlib.api.world.maze.MazeComponent;
 import net.ludocrypt.limlib.api.world.maze.MazeGenerator;
 import net.ludocrypt.limlib.api.world.maze.MazePiece;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.LootableContainerBlockEntity;
+import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerLightingProvider;
@@ -23,6 +27,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructureTemplateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -36,6 +41,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
+
+import io.github.cheese_curd.nullzone.world.Beta18OreTypes;
 
 public class StonestillsChunkGen extends AbstractNbtChunkGenerator
 {
@@ -57,9 +64,9 @@ public class StonestillsChunkGen extends AbstractNbtChunkGenerator
 	public static NbtGroup createGroup() {
 		NbtGroup.Builder builder = NbtGroup.Builder
 			.create(ModLimGen.STONESTILLS_ID)
-			.with("base", "base")
-			.with("ladder", "ladder")
-			.with("wall", 1, 4);
+			.with("base", "base", 1, 2)
+			.with("ladder", "ladder", 1, 2)
+			.with("wall", 1, 5);
 
 		return builder.build();
 	}
@@ -67,7 +74,7 @@ public class StonestillsChunkGen extends AbstractNbtChunkGenerator
 	public StonestillsChunkGen(BiomeSource biomeSource, int width, int height, int padding) {
 		super(biomeSource, createGroup());
 		this.mazeGenerator = new MazeGenerator<MazeComponent>(width, height, padding + width, padding + width, 0);
-		this.chunkGenBase = new ChunkGenBase();
+		this.chunkGenBase = new ChunkGenBase(ModLimGen.STONESTILLS_ID);
 	}
 
 	@Override
@@ -98,9 +105,9 @@ public class StonestillsChunkGen extends AbstractNbtChunkGenerator
 		boolean isLadder = random.nextDouble() < 0.025;
 
 		if (isLadder)
-			generateNbt(region, pos.toBlock().down(8), nbtGroup.nbtId("ladder", "ladder"));
+			generateNbt(region, pos.toBlock().down(8), nbtGroup.pick("ladder", random));
 		else
-			generateNbt(region, pos.toBlock(), nbtGroup.nbtId("base", "base"));
+			generateNbt(region, pos.toBlock(), nbtGroup.pick("base", random));
 
 		// Floor -1
 		BlockPos blockPos = pos.toBlock().down(8);
@@ -113,7 +120,91 @@ public class StonestillsChunkGen extends AbstractNbtChunkGenerator
 		generateNbt(region, blockPos.up(1), nbtGroup.pick("wall", random), Manipulation.CLOCKWISE_90);
 
 		if (!isLadder) // Floor 2
-			generateNbt(region, blockPos, nbtGroup.nbtId("base", "base"));
+			generateNbt(region, blockPos, nbtGroup.pick("base", random));
+	}
+
+	private void generateSingleOreVein(ChunkRegion region, Chunk chunk, BlockPos origin, RandomGenerator random) {
+		Block veinBlock;
+		int veinSize = 1;
+
+		if (random.nextDouble() < 0.25) // Lava/Air Vein
+		{
+			veinBlock = random.nextBoolean() ? Blocks.LAVA : Blocks.AIR;
+			veinSize += random.nextInt(10);
+
+			if (veinBlock == Blocks.AIR && random.nextBoolean()) // Cave Pocket
+				veinSize = (veinSize + 5) * 2;
+		}
+		else // Ore Vein
+		{
+			Beta18OreTypes oreIndex = Beta18OreTypes.values()[random.nextInt(Beta18OreTypes.values().length)];
+
+			switch (oreIndex)
+			{
+				case COAL:
+					veinSize += random.nextInt(8);
+					veinBlock = Blocks.COAL_ORE;
+					break;
+				case IRON:
+					veinSize += random.nextInt(6);
+					veinBlock = Blocks.IRON_ORE;
+					break;
+				case GOLD:
+					veinSize += random.nextInt(3);
+					veinBlock = Blocks.GOLD_ORE;
+					break;
+				case REDSTONE:
+					veinSize += random.nextInt(4);
+					veinBlock = Blocks.REDSTONE_ORE;
+					break;
+				case LAPIS_LAZULI:
+					veinSize += random.nextInt(3);
+					veinBlock = Blocks.LAPIS_ORE;
+					break;
+				case DIAMOND:
+					veinSize += random.nextInt(4);
+					veinBlock = Blocks.DIAMOND_ORE;
+					break;
+				default:
+					veinBlock = Blocks.IRON_ORE;
+					Nullzone.LOGGER.info("[Stonestills] Unknown Ore Index: {}", oreIndex);
+			}
+		}
+
+		for (int i = 0; i < veinSize; i++) {
+			BlockPos pos = origin.add(
+				random.nextInt(3) - 1,
+				random.nextInt(3) - 1,
+				random.nextInt(3) - 1
+			);
+
+			if (!region.isValidForSetBlock(pos)) continue;
+
+			BlockState current = chunk.getBlockState(pos);
+
+			if (current.isOf(Blocks.STONE))
+				chunk.setBlockState(pos, veinBlock.getDefaultState(), true);
+		}
+	}
+
+
+	private void generateOreVeins(ChunkRegion chunkRegion, Chunk chunk)
+	{
+		ChunkPos chunkPos = chunk.getPos();
+
+		RandomGenerator random = RandomGenerator.createLegacy(
+			chunkRegion.getSeed() + LimlibHelper.blockSeed(chunkPos.getBlockPos(Math.min(16, chunkPos.x), chunkPos.x + chunkPos.z, Math.min(16, chunkPos.x)))
+		);
+
+		int veinAttempts = 4;
+
+		for (int i = 0; i < veinAttempts; i++) {
+			int x = chunkPos.getStartX() + random.nextInt(16);
+			int y = chunkRegion.getBottomY() + random.nextInt(chunkRegion.getTopY());
+			int z = chunkPos.getStartZ() + random.nextInt(16);
+
+			generateSingleOreVein(chunkRegion, chunk, new BlockPos(x, y, z), random);
+		}
 	}
 
 	@Override
@@ -123,11 +214,13 @@ public class StonestillsChunkGen extends AbstractNbtChunkGenerator
 		ServerLightingProvider lightingProvider, Function<Chunk, CompletableFuture<Either<Chunk,
 			ChunkHolder.Unloaded>>> fullChunkConverter, List<Chunk> chunks, Chunk chunk)
 	{
-		ChunkGenBase.fillBelowYWith(-8, Blocks.STONE, chunk, chunkRegion);
+		ChunkGenBase.fillBelowYWith(-7, Blocks.STONE, chunk, chunkRegion);
 
 		this.mazeGenerator.generateMaze(new MazeComponent.Vec2i(chunk.getPos().getStartPos()), chunkRegion, this::newMaze, this::decorateCell);
 
 		ChunkGenBase.fillAboveYWith(9, Blocks.STONE, chunk, chunkRegion);
+
+		generateOreVeins(chunkRegion, chunk);
 
 		return CompletableFuture.completedFuture(chunk);
 	}
@@ -150,5 +243,11 @@ public class StonestillsChunkGen extends AbstractNbtChunkGenerator
 		super.modifyStructure(region, pos, state, blockEntityNbt);
 
 		chunkGenBase.modifyStructure(region, pos, state, blockEntityNbt);
+	}
+
+	@Override
+	protected Identifier getContainerLootTable(LootableContainerBlockEntity container)
+	{
+		return NullLootTables.STONESTILLS_STORAGE;
 	}
 }
